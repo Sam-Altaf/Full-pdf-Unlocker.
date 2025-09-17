@@ -1,0 +1,163 @@
+{
+  "name": "AltafToolsHub - Privacy-First File Tools",
+  "short_name": "AltafToolsHub",
+  "description": "Free, secure, browser-based tools for PDF processing, image conversion, QR generation, and more. All processing happens locally in your browser for complete privacy.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0080ff",
+  "orientation": "any",
+  "lang": "en-US",
+  "dir": "ltr",
+  "categories": ["productivity", "utilities", "business"],
+  "iarc_rating_id": "e84b072d-71b3-4d3e-86ae-31a8ce4e53b7",
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "shortcuts": [
+    {
+      "name": "Compress PDF",
+      "short_name": "Compress",
+      "description": "Reduce PDF file size",
+      "url": "/compress-pdf",
+      "icons": [{ "src": "/icon-compress.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Unlock PDF",
+      "short_name": "Unlock",
+      "description": "Remove PDF password",
+      "url": "/unlock-pdf",
+      "icons": [{ "src": "/icon-unlock.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "JPG to PDF",
+      "short_name": "Convert",
+      "description": "Convert images to PDF",
+      "url": "/jpg-to-pdf",
+      "icons": [{ "src": "/icon-convert.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "QR Generator",
+      "short_name": "QR Code",
+      "description": "Generate QR codes",
+      "url": "/qr-generator",
+      "icons": [{ "src": "/icon-qr.png", "sizes": "96x96" }]
+    }
+  ],
+  "icons": [
+    {
+      "src": "/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-maskable-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon-maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/home.png",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "platform": "wide",
+      "label": "AltafToolsHub Home - Browse 60+ free tools"
+    },
+    {
+      "src": "/screenshots/compress-pdf.png",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "platform": "wide",
+      "label": "Compress PDF to specific sizes"
+    },
+    {
+      "src": "/screenshots/mobile-home.png",
+      "sizes": "412x915",
+      "type": "image/png",
+      "platform": "narrow",
+      "label": "Mobile optimized interface"
+    }
+  ],
+  "share_target": {
+    "action": "/share",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  },
+  "protocol_handlers": [
+    {
+      "protocol": "web+pdf",
+      "url": "/handle-pdf?url=%s"
+    }
+  ],
+  "file_handlers": [
+    {
+      "action": "/handle-file",
+      "accept": {
+        "application/pdf": [".pdf"],
+        "image/*": [".jpg", ".jpeg", ".png", ".webp", ".gif"]
+      }
+    }
+  ],
+  "launch_handler": {
+    "client_mode": "auto"
+  },
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "scope": "/",
+  "id": "/"
+}

@@ -13,6 +13,14 @@
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="language" content="English" />
     <meta name="revisit-after" content="7 days" />
+    <meta name="rating" content="general" />
+    <meta name="distribution" content="global" />
+    <meta name="audience" content="all" />
+    <meta name="copyright" content="2025 AltafToolsHub. All rights reserved." />
+    <meta name="geo.region" content="US" />
+    <meta name="geo.placename" content="United States" />
+    <meta name="generator" content="React with Vite" />
+    <meta name="classification" content="Technology, Utilities, Business Tools" />
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -24,6 +32,14 @@
     <meta property="og:image:height" content="630" />
     <meta property="og:site_name" content="AltafToolsHub" />
     <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="en_GB" />
+    <meta property="og:locale:alternate" content="en_CA" />
+    <meta property="article:publisher" content="https://www.altaftoolshub.com" />
+    <meta property="article:author" content="AltafToolsHub Team" />
+    <meta property="article:section" content="Technology" />
+    <meta property="article:tag" content="PDF Tools" />
+    <meta property="article:tag" content="File Converter" />
+    <meta property="article:tag" content="Privacy Tools" />
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
@@ -32,6 +48,8 @@
     <meta property="twitter:description" content="Secure, fast, and completely client-side file processing. Your files never leave your browser." />
     <meta property="twitter:image" content="https://www.altaftoolshub.com/og-image.png" />
     <meta property="twitter:site" content="@altaftoolshub" />
+    <meta property="twitter:creator" content="@altaftoolshub" />
+    <meta name="twitter:domain" content="altaftoolshub.com" />
     
     <!-- PWA & Mobile -->
     <meta name="mobile-web-app-capable" content="yes" />
@@ -41,50 +59,75 @@
     <meta name="application-name" content="AltafToolsHub" />
     <meta name="theme-color" content="#0080ff" />
     <meta name="msapplication-TileColor" content="#0080ff" />
+    <meta name="msapplication-TileImage" content="/icon-144x144.png" />
+    <meta name="msapplication-config" content="/browserconfig.xml" />
+    <meta name="format-detection" content="telephone=no" />
     
-    <!-- Canonical URL -->
+    <!-- Canonical URL and Alternate Languages -->
     <link rel="canonical" href="https://www.altaftoolshub.com/" />
+    <link rel="alternate" hreflang="en" href="https://www.altaftoolshub.com/" />
+    <link rel="alternate" hreflang="en-US" href="https://www.altaftoolshub.com/" />
+    <link rel="alternate" hreflang="en-GB" href="https://www.altaftoolshub.com/" />
+    <link rel="alternate" hreflang="x-default" href="https://www.altaftoolshub.com/" />
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#0080ff" />
     
     <!-- Preconnect to optimize font loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
-    <!-- Preload critical font -->
-    <link rel="preload" href="https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <!-- Preload critical font - Inter Regular -->
+    <link rel="preload" href="https://fonts.gstatic.com/s/inter/v13/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7.woff2" as="font" type="font/woff2" crossorigin="anonymous">
     
     <!-- Font loading with display swap for better performance -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- DNS Prefetch for potential external resources -->
+    <!-- DNS Prefetch and Preconnect for external resources -->
     <link rel="dns-prefetch" href="https://www.google-analytics.com">
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://stats.g.doubleclick.net">
+    <link rel="preconnect" href="https://www.google-analytics.com" crossorigin>
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
     
     <!-- Prefetch likely navigation targets -->
     <link rel="prefetch" href="/compress-pdf">
     <link rel="prefetch" href="/jpg-to-pdf">
     <link rel="prefetch" href="/unlock-pdf">
     <link rel="prefetch" href="/qr-generator">
+    <link rel="prefetch" href="/merge-pdf">
+    <link rel="prefetch" href="/split-pdf">
+    <link rel="prefetch" href="/rotate-pdf">
     
     <!-- Preconnect to CDNs and external services -->
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <link rel="preconnect" href="https://unpkg.com" crossorigin>
     
-    <!-- Performance hints -->
+    <!-- Enhanced Performance Optimization -->
     <meta http-equiv="x-dns-prefetch-control" content="on">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Accept-CH" content="DPR, Viewport-Width, Width">
+    <meta http-equiv="Accept-CH-Lifetime" content="86400">
     
     <!-- Additional performance optimization -->
     <link rel="modulepreload" href="/src/main.tsx">
+    <link rel="modulepreload" href="/src/App.tsx">
+    <link rel="modulepreload" href="/src/lib/queryClient.ts">
     
-    <!-- Security headers -->
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <!-- Enhanced Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google-analytics.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; connect-src 'self' https://www.google-analytics.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests;">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
     <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()">
+    <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin">
+    <meta http-equiv="Cross-Origin-Embedder-Policy" content="require-corp">
     
     <!-- Structured Data - Organization -->
     <script type="application/ld+json">
@@ -173,9 +216,109 @@
       ]
     }
     </script>
+    
+    <!-- Structured Data - LocalBusiness -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "@id": "https://www.altaftoolshub.com/#business",
+      "name": "AltafToolsHub",
+      "image": "https://www.altaftoolshub.com/logo.png",
+      "url": "https://www.altaftoolshub.com",
+      "telephone": "+1-555-123-4567",
+      "priceRange": "Free",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "US"
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ],
+        "opens": "00:00",
+        "closes": "23:59"
+      },
+      "sameAs": [
+        "https://twitter.com/altaftoolshub",
+        "https://github.com/altaftoolshub",
+        "https://linkedin.com/company/altaftoolshub"
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Free Online Tools",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "name": "PDF Compressor",
+              "description": "Compress PDF files to specific sizes"
+            },
+            "price": "0",
+            "priceCurrency": "USD"
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "name": "PDF Unlocker",
+              "description": "Remove password protection from PDFs"
+            },
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        ]
+      }
+    }
+    </script>
+    
+    <!-- Structured Data - AggregateOffer -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "AggregateOffer",
+      "offers": {
+        "@type": "Offer",
+        "lowPrice": "0.00",
+        "highPrice": "0.00",
+        "priceCurrency": "USD",
+        "offerCount": "60",
+        "availability": "https://schema.org/InStock",
+        "seller": {
+          "@type": "Organization",
+          "name": "AltafToolsHub"
+        }
+      }
+    }
+    </script>
+    
+    <!-- Structured Data - SearchAction -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://www.altaftoolshub.com/search?q={search_term_string}"
+      },
+      "query-input": "required name=search_term_string"
+    }
+    </script>
   </head>
   <body>
-    <div id="root"></div>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-to-main" style="position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden; z-index: -999;">
+      Skip to main content
+    </a>
+    <div id="root" role="main" aria-label="Main application container"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

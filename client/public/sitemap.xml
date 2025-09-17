@@ -55,6 +55,45 @@
     </image:image>
   </url>
   
+  <url>
+    <loc>https://www.altaftoolshub.com/merge-pdf</loc>
+    <lastmod>2025-01-17T12:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <mobile:mobile/>
+    <image:image>
+      <image:loc>https://www.altaftoolshub.com/og-merge-pdf.png</image:loc>
+      <image:title>PDF Merger Tool</image:title>
+      <image:caption>Combine multiple PDF files into one document</image:caption>
+    </image:image>
+  </url>
+  
+  <url>
+    <loc>https://www.altaftoolshub.com/split-pdf</loc>
+    <lastmod>2025-01-17T12:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <mobile:mobile/>
+    <image:image>
+      <image:loc>https://www.altaftoolshub.com/og-split-pdf.png</image:loc>
+      <image:title>PDF Splitter Tool</image:title>
+      <image:caption>Split PDF documents into separate files</image:caption>
+    </image:image>
+  </url>
+  
+  <url>
+    <loc>https://www.altaftoolshub.com/rotate-pdf</loc>
+    <lastmod>2025-01-17T12:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <mobile:mobile/>
+    <image:image>
+      <image:loc>https://www.altaftoolshub.com/og-rotate-pdf.png</image:loc>
+      <image:title>PDF Rotator Tool</image:title>
+      <image:caption>Rotate PDF pages to correct orientation</image:caption>
+    </image:image>
+  </url>
+  
   <!-- Utility Tools (High Priority) -->
   <url>
     <loc>https://www.altaftoolshub.com/qr-generator</loc>
@@ -83,14 +122,110 @@
   </url>
   
   
-  <!-- Text and Image Tools -->
+  <!-- PDF Manipulation Tools -->
+  <url>
+    <loc>https://www.altaftoolshub.com/organize-pdf</loc>
+    <lastmod>2025-01-17T12:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <mobile:mobile/>
+    <image:image>
+      <image:loc>https://www.altaftoolshub.com/og-organize-pdf.png</image:loc>
+      <image:title>PDF Organizer Tool</image:title>
+      <image:caption>Reorder, add, and remove PDF pages</image:caption>
+    </image:image>
+  </url>
   
+  <url>
+    <loc>https://www.altaftoolshub.com/add-page-number</loc>
+    <lastmod>2025-01-17T12:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <mobile:mobile/>
+    <image:image>
+      <image:loc>https://www.altaftoolshub.com/og-add-page-number.png</image:loc>
+      <image:title>Add Page Numbers to PDF</image:title>
+      <image:caption>Add page numbers to PDF documents</image:caption>
+    </image:image>
+  </url>
+  
+  <url>
+    <loc>https://www.altaftoolshub.com/watermark-pdf</loc>
+    <lastmod>2025-01-17T12:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <mobile:mobile/>
+    <image:image>
+      <image:loc>https://www.altaftoolshub.com/og-watermark-pdf.png</image:loc>
+      <image:title>PDF Watermark Tool</image:title>
+      <image:caption>Add text or image watermarks to PDF files</image:caption>
+    </image:image>
+  </url>
+  
+  <url>
+    <loc>https://www.altaftoolshub.com/crop-pdf</loc>
+    <lastmod>2025-01-17T12:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <mobile:mobile/>
+    <image:image>
+      <image:loc>https://www.altaftoolshub.com/og-crop-pdf.png</image:loc>
+      <image:title>PDF Cropper Tool</image:title>
+      <image:caption>Crop and resize PDF pages</image:caption>
+    </image:image>
+  </url>
+  
+  <url>
+    <loc>https://www.altaftoolshub.com/extract-pages</loc>
+    <lastmod>2025-01-17T12:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <mobile:mobile/>
+    <image:image>
+      <image:loc>https://www.altaftoolshub.com/og-extract-pages.png</image:loc>
+      <image:title>Extract PDF Pages</image:title>
+      <image:caption>Extract specific pages from PDF documents</image:caption>
+    </image:image>
+  </url>
+  
+  <url>
+    <loc>https://www.altaftoolshub.com/remove-pages</loc>
+    <lastmod>2025-01-17T12:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <mobile:mobile/>
+    <image:image>
+      <image:loc>https://www.altaftoolshub.com/og-remove-pages.png</image:loc>
+      <image:title>Remove PDF Pages</image:title>
+      <image:caption>Delete unwanted pages from PDF files</image:caption>
+    </image:image>
+  </url>
+  
+  <!-- Text and Image Extraction Tools -->
   <url>
     <loc>https://www.altaftoolshub.com/extract-text</loc>
     <lastmod>2025-01-17T12:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <mobile:mobile/>
+    <image:image>
+      <image:loc>https://www.altaftoolshub.com/og-extract-text.png</image:loc>
+      <image:title>Extract Text from PDF</image:title>
+      <image:caption>Extract text content from PDF and image files</image:caption>
+    </image:image>
+  </url>
+  
+  <url>
+    <loc>https://www.altaftoolshub.com/extract-images</loc>
+    <lastmod>2025-01-17T12:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <mobile:mobile/>
+    <image:image>
+      <image:loc>https://www.altaftoolshub.com/og-extract-images.png</image:loc>
+      <image:title>Extract Images from PDF</image:title>
+      <image:caption>Extract all images from PDF documents</image:caption>
+    </image:image>
   </url>
   
   

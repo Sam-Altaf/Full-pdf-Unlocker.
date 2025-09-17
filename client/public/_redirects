@@ -1,0 +1,162 @@
+# Common misspellings and alternative URLs redirect to correct pages
+# Status code 301 = permanent redirect for SEO
+
+# Homepage variations
+/home              /                    301
+/index             /                    301
+/index.html        /                    301
+/main              /                    301
+
+# Common typos and variations for PDF tools
+/compres-pdf       /compress-pdf        301
+/compress          /compress-pdf        301
+/compresspdf       /compress-pdf        301
+/pdf-compress      /compress-pdf        301
+/pdf-compressor    /compress-pdf        301
+/reduce-pdf        /compress-pdf        301
+/shrink-pdf        /compress-pdf        301
+/optimize-pdf      /compress-pdf        301
+
+/unlockpdf         /unlock-pdf          301
+/pdf-unlock        /unlock-pdf          301
+/remove-password   /unlock-pdf          301
+/decrypt-pdf       /unlock-pdf          301
+/pdf-password      /unlock-pdf          301
+/password-remover  /unlock-pdf          301
+
+/jpg2pdf           /jpg-to-pdf          301
+/jpgtopdf          /jpg-to-pdf          301
+/jpeg-to-pdf       /jpg-to-pdf          301
+/image-to-pdf      /jpg-to-pdf          301
+/img-to-pdf        /jpg-to-pdf          301
+/convert-jpg       /jpg-to-pdf          301
+/convert-image     /jpg-to-pdf          301
+
+/mergepdf          /merge-pdf           301
+/pdf-merge         /merge-pdf           301
+/combine-pdf       /merge-pdf           301
+/join-pdf          /merge-pdf           301
+/pdf-combiner      /merge-pdf           301
+
+/splitpdf          /split-pdf           301
+/pdf-split         /split-pdf           301
+/divide-pdf        /split-pdf           301
+/separate-pdf      /split-pdf           301
+/pdf-splitter      /split-pdf           301
+
+/rotatepdf         /rotate-pdf          301
+/pdf-rotate        /rotate-pdf          301
+/turn-pdf          /rotate-pdf          301
+/flip-pdf          /rotate-pdf          301
+/pdf-rotation      /rotate-pdf          301
+
+# QR Code variations
+/qr-code           /qr-generator        301
+/qrcode            /qr-generator        301
+/qr                /qr-generator        301
+/generate-qr       /qr-generator        301
+/create-qr         /qr-generator        301
+/qr-maker          /qr-generator        301
+/qr-creator        /qr-generator        301
+
+# Password generator variations
+/password          /password-generator  301
+/generate-password /password-generator  301
+/create-password   /password-generator  301
+/secure-password   /password-generator  301
+/random-password   /password-generator  301
+/pass-gen          /password-generator  301
+
+# Extract tools variations
+/extract-txt       /extract-text        301
+/extracttext       /extract-text        301
+/pdf-to-text       /extract-text        301
+/text-extraction   /extract-text        301
+/ocr               /extract-text        301
+
+/extractimages     /extract-images      301
+/extract-img       /extract-images      301
+/pdf-images        /extract-images      301
+/image-extraction  /extract-images      301
+
+/extractpages      /extract-pages       301
+/extract-page      /extract-pages       301
+/pdf-pages         /extract-pages       301
+/page-extraction   /extract-pages       301
+
+# Other PDF tools
+/organizepdf       /organize-pdf        301
+/pdf-organizer     /organize-pdf        301
+/arrange-pdf       /organize-pdf        301
+/reorder-pdf       /organize-pdf        301
+
+/add-page-numbers  /add-page-number     301
+/page-numbers      /add-page-number     301
+/number-pages      /add-page-number     301
+/pdf-numbering     /add-page-number     301
+
+/watermarkpdf      /watermark-pdf       301
+/pdf-watermark     /watermark-pdf       301
+/add-watermark     /watermark-pdf       301
+/stamp-pdf         /watermark-pdf       301
+
+/croppdf           /crop-pdf            301
+/pdf-crop          /crop-pdf            301
+/trim-pdf          /crop-pdf            301
+/resize-pdf        /crop-pdf            301
+
+/removepages       /remove-pages        301
+/delete-pages      /remove-pages        301
+/pdf-remove        /remove-pages        301
+/delete-pdf-pages  /remove-pages        301
+
+# All tools variations
+/tools             /all-tools           301
+/all               /all-tools           301
+/alltools          /all-tools           301
+/tool-list         /all-tools           301
+/browse            /all-tools           301
+/features          /all-tools           301
+
+# Legal pages variations
+/privacy-policy    /privacy             301
+/privacypolicy     /privacy             301
+/data-privacy      /privacy             301
+/privacy-notice    /privacy             301
+
+/terms-of-service  /terms               301
+/terms-and-conditions /terms            301
+/tos               /terms               301
+/legal             /terms               301
+/disclaimer        /terms               301
+
+# Common file extensions people might add
+/*.pdf             /                    301
+/*.jpg             /jpg-to-pdf          301
+/*.jpeg            /jpg-to-pdf          301
+/*.png             /jpg-to-pdf          301
+
+# API or technical endpoints (prevent 404s)
+/api/*             /                    404
+/admin/*           /                    404
+/.git/*            /                    404
+/wp-admin/*        /                    404
+/.env              /                    404
+
+# Old or legacy URLs (if migrating from another domain)
+/old-tools/*       /all-tools           301
+/legacy/*          /                    301
+/v1/*              /                    301
+/beta/*            /                    301
+
+# Regional variations
+/en/*              /:splat              301
+/us/*              /:splat              301
+/uk/*              /:splat              301
+
+# Mobile app promotion (future)
+/app               /                    301
+/download          /                    301
+/mobile            /                    301
+/android           /                    301
+/ios               /                    301
