@@ -6,25 +6,26 @@ import { Progress } from "@/components/ui/progress";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { 
   Lock, Shield, Check, AlertCircle, Download, Eye, EyeOff,
-  ArrowLeft, KeyRound, Sparkles, Zap, FileText, Unlock
+  KeyRound, Sparkles, Zap, FileText, Unlock, CheckCircle2, Loader2
 } from "lucide-react";
-import { Link } from "wouter";
 import FileUpload from "@/components/ui/file-upload";
-import { useSEO, generateHowToSchema, generateSoftwareApplicationSchema } from "@/hooks/use-seo";
+import { useSEO } from "@/hooks/use-seo";
 import { cn } from "@/lib/utils";
-import Breadcrumbs from "@/components/seo/breadcrumbs";
-import ToolSEO, { toolFAQs } from "@/components/seo/tool-seo";
-import PrivacyNotice from "@/components/privacy-notice";
-import { WhyUseSection, UseCasesSection, ComparisonSection, HowItWorksSection, commonFeatures } from "@/components/seo/tool-features";
-import { ToolFAQ, generatePDFUnlockFAQs } from "@/components/seo/tool-faq";
-import { Building2, Users, Briefcase, Home, Archive, FileKey, School } from "lucide-react";
+import ToolPageLayout from "@/components/layout/tool-page-layout";
+import { toolContentData } from "@/lib/tool-content-data";
+import { PDFDocument } from "pdf-lib";
+import * as pdfjsLib from "pdfjs-dist";
+
+// Configure PDF.js worker
+pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
 
 interface UnlockResult {
   originalSize: number;
   unlockedBlob: Blob;
 }
 
-export default function UnlockPDF() {
+// Tool Component - Core functionality only
+function UnlockPDFTool() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -32,63 +33,6 @@ export default function UnlockPDF() {
   const [progress, setProgress] = useState(0);
   const [result, setResult] = useState<UnlockResult | null>(null);
   const [error, setError] = useState<string | null>(null);
-
-  // Generate structured data for SEO
-  const howToSchema = generateHowToSchema({
-    name: "How to Unlock Password-Protected PDF Files",
-    description: "Remove password protection from PDF files securely in your browser",
-    totalTime: "PT30S",
-    steps: [
-      { name: "Upload PDF", text: "Select or drag your password-protected PDF file" },
-      { name: "Enter Password", text: "Type the PDF password you know" },
-      { name: "Unlock PDF", text: "Click 'Unlock PDF' to remove protection" },
-      { name: "Download", text: "Download your unlocked PDF instantly" }
-    ]
-  });
-
-  const softwareSchema = generateSoftwareApplicationSchema({
-    name: "PDF Unlocker - AltafToolsHub",
-    description: "Secure PDF password remover. Unlock password-protected PDFs directly in your browser with complete privacy.",
-    applicationCategory: "SecurityApplication",
-    url: "https://www.altaftoolshub.com/unlock-pdf",
-    aggregateRating: { ratingValue: 4.8, ratingCount: 987, bestRating: 5 },
-    featureList: [
-      "Remove PDF password protection",
-      "100% client-side processing",
-      "No file upload to servers",
-      "Preserves document quality",
-      "Works with all PDF versions",
-      "Instant unlocking process"
-    ],
-    datePublished: "2024-01-01",
-    dateModified: "2025-01-17"
-  });
-
-  useSEO({
-    title: "Unlock PDF Files Online - Remove PDF Password Free | AltafToolsHub",
-    description: "Free online PDF unlocker to remove password protection from PDFs. 100% secure client-side processing. Your files and passwords never leave your browser.",
-    path: "/unlock-pdf",
-    keywords: "unlock pdf, remove pdf password, pdf unlocker, pdf password remover, decrypt pdf, unlock protected pdf, free pdf unlocker, online pdf unlock, pdf security remover 2025",
-    ogImage: "https://www.altaftoolshub.com/og-unlock-pdf.png",
-    structuredData: [howToSchema, softwareSchema],
-    additionalMetaTags: [
-      { name: "application-name", content: "PDF Unlocker - AltafToolsHub" },
-      { property: "article:section", content: "PDF Tools" },
-      { property: "article:tag", content: "PDF Security" },
-      { property: "article:tag", content: "Privacy Tools" },
-      { property: "article:tag", content: "Document Management" }
-    ]
-  });
-
-  const handleFileSelect = (file: File) => {
-    if (file.type !== 'application/pdf') {
-      setError('Please select a valid PDF file.');
-      return;
-    }
-    setSelectedFile(file);
-    setResult(null);
-    setError(null);
-  };
 
   const formatFileSize = (bytes: number) => {
     if (bytes === 0) return '0 Bytes';
@@ -98,39 +42,21 @@ export default function UnlockPDF() {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   };
 
-  const downloadUnlockedPDF = () => {
-    if (!selectedFile || !result) return;
-
-    const url = URL.createObjectURL(result.unlockedBlob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = selectedFile.name.replace('.pdf', '-unlocked.pdf');
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    
-    setTimeout(() => URL.revokeObjectURL(url), 100);
-  };
-
-  const resetTool = () => {
-    setSelectedFile(null);
-    setPassword('');
-    setShowPassword(false);
-    setResult(null);
-    setIsProcessing(false);
-    setProgress(0);
-    setError(null);
-  };
-
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && selectedFile && password.trim() && !isProcessing) {
-      unlockPDF();
+  const handleFileUpload = (files: File[]) => {
+    const file = files[0];
+    if (file?.type === 'application/pdf') {
+      setSelectedFile(file);
+      setResult(null);
+      setError(null);
+      setPassword("");
+    } else {
+      setError('Please select a valid PDF file');
     }
   };
 
   const unlockPDF = async () => {
     if (!selectedFile || !password.trim()) {
-      setError('Please select a file and enter the password.');
+      setError('Please provide both a PDF file and password');
       return;
     }
 
@@ -139,485 +65,392 @@ export default function UnlockPDF() {
     setError(null);
 
     try {
-      setProgress(20);
+      // Progress updates
+      setProgress(10);
+      await new Promise(resolve => setTimeout(resolve, 200));
+
       const arrayBuffer = await selectedFile.arrayBuffer();
       
-      setProgress(40);
-      const { getPDFJS } = await import('@/lib/pdf-utils');
-      const pdfjsLib = getPDFJS();
+      setProgress(25);
       
+      // Use PDF.js to load the password-protected PDF
+      const pdfBytesCopy = arrayBuffer.slice(0);
       const loadingTask = pdfjsLib.getDocument({
-        data: arrayBuffer,
-        password: password.trim()
+        data: pdfBytesCopy,
+        password: password
       });
       
+      setProgress(40);
+      
       const pdfDocument = await loadingTask.promise;
-      setProgress(30);
-      
-      const { PDFDocument: PDFLibDocument } = await import('pdf-lib');
-      const newPdfDoc = await PDFLibDocument.create();
-      
       const numPages = pdfDocument.numPages;
-      const baseProgress = 30;
-      const pageProgress = 60 / numPages;
       
+      setProgress(50);
+      
+      // Create a new unlocked PDF using pdf-lib
+      const newPdfDoc = await PDFDocument.create();
+      
+      // Render each page to canvas and add to new PDF
       for (let pageNum = 1; pageNum <= numPages; pageNum++) {
-        setProgress(baseProgress + (pageNum - 1) * pageProgress);
+        const progressPercent = 50 + Math.round(((pageNum - 1) / numPages) * 40);
+        setProgress(progressPercent);
         
         const page = await pdfDocument.getPage(pageNum);
-        const scale = 2.0;
-        const viewport = page.getViewport({ scale });
+        const viewport = page.getViewport({ scale: 1.0 });
         
+        // Create canvas to render page
         const canvas = document.createElement('canvas');
         const context = canvas.getContext('2d');
-        if (!context) {
-          throw new Error('Canvas context not available');
-        }
+        if (!context) throw new Error('Failed to get canvas context');
         
-        canvas.height = viewport.height;
         canvas.width = viewport.width;
+        canvas.height = viewport.height;
         
+        // Render page to canvas
         const renderContext = {
           canvasContext: context,
           viewport: viewport,
-          canvas: canvas
         };
         
         await page.render(renderContext).promise;
         
-        const jpegBlob = await new Promise<Blob>((resolve, reject) => {
-          canvas.toBlob((blob) => {
-            if (blob) {
-              resolve(blob);
-            } else {
-              reject(new Error('Failed to convert page to JPEG'));
-            }
-          }, 'image/jpeg', 0.9);
-        });
+        // Convert canvas to image and add to new PDF
+        const imageDataUrl = canvas.toDataURL('image/jpeg', 0.95);
+        const imageBytes = dataURLtoUint8Array(imageDataUrl);
+        const embeddedImage = await newPdfDoc.embedJpg(imageBytes);
         
-        const jpegBytes = await jpegBlob.arrayBuffer();
-        const image = await newPdfDoc.embedJpg(jpegBytes);
-        
-        const pageWidth = viewport.width / scale * 0.75;
-        const pageHeight = viewport.height / scale * 0.75;
-        
-        const newPage = newPdfDoc.addPage([pageWidth, pageHeight]);
-        
-        newPage.drawImage(image, {
+        // Add page with image
+        const pdfPage = newPdfDoc.addPage([viewport.width, viewport.height]);
+        pdfPage.drawImage(embeddedImage, {
           x: 0,
           y: 0,
-          width: pageWidth,
-          height: pageHeight,
+          width: viewport.width,
+          height: viewport.height,
         });
       }
-      
-      setProgress(95);
-      
-      const unlockedPdfBytes = await newPdfDoc.save();
-      pdfDocument.destroy();
       
       setProgress(90);
       
-      const unlockedBlob = new Blob([unlockedPdfBytes], { type: 'application/pdf' });
-      
+      // Save the unlocked PDF
+      const unlockedBytes = await newPdfDoc.save();
+      const unlockedBlob = new Blob([unlockedBytes], { type: 'application/pdf' });
+
       setProgress(100);
       
-      setTimeout(() => {
-        setResult({
-          originalSize: selectedFile.size,
-          unlockedBlob
-        });
-        setIsProcessing(false);
-        setProgress(0);
-      }, 500);
-      
-    } catch (err) {
-      console.error('PDF unlock error:', err);
-      let errorMessage = 'Failed to unlock PDF. ';
-      
-      if (err instanceof Error) {
-        if (err.message.includes('password')) {
-          errorMessage = 'Incorrect password. Please check and try again.';
-        } else if (err.message.includes('encrypt')) {
-          errorMessage = 'This PDF uses an unsupported encryption method.';
+      const unlockResult: UnlockResult = {
+        originalSize: selectedFile.size,
+        unlockedBlob
+      };
+
+      setResult(unlockResult);
+    } catch (error) {
+      console.error('Unlock error:', error);
+      if (error instanceof Error) {
+        if (error.message.includes('password') || error.message.includes('Incorrect') || error.message.includes('PasswordException')) {
+          setError('Incorrect password. Please check your password and try again.');
+        } else if (error.message.includes('encrypted') || error.message.includes('InvalidPDFException')) {
+          setError('Unable to read PDF. Please ensure the file is password-protected and not corrupted.');
         } else {
-          errorMessage += err.message;
+          setError(`Unable to unlock PDF: ${error.message}`);
         }
+      } else {
+        setError('An error occurred while unlocking the PDF');
       }
-      
-      setError(errorMessage);
+    } finally {
       setIsProcessing(false);
       setProgress(0);
     }
   };
 
-  if (result) {
-    return (
-      <div className="min-h-screen pattern-bg">
-        <div className="container mx-auto px-4 py-8 max-w-4xl">
-          <div className="text-center mb-8">
-            <Button 
-              variant="ghost" 
-              className="mb-4" 
-              data-testid="button-back"
-              onClick={() => {
-                window.location.href = '/';
-                setTimeout(() => {
-                  const toolsSection = document.getElementById('tools-section');
-                  if (toolsSection) {
-                    toolsSection.scrollIntoView({ behavior: 'smooth' });
-                  }
-                }, 100);
-              }}
-            >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Tools
-            </Button>
-            <h1 className="text-3xl sm:text-4xl font-bold mb-4 gradient-text">PDF Unlocker</h1>
-            <p className="text-lg text-muted-foreground">Your PDF has been unlocked successfully!</p>
-          </div>
+  // Utility function to convert data URL to Uint8Array
+  const dataURLtoUint8Array = (dataURL: string): Uint8Array => {
+    const base64String = dataURL.split(',')[1];
+    const binaryString = atob(base64String);
+    const bytes = new Uint8Array(binaryString.length);
+    for (let i = 0; i < binaryString.length; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+    return bytes;
+  };
 
-          <Card className="glass p-8">
-            <div className="gradient-primary w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6">
-              <Unlock className="w-10 h-10 text-white" />
-            </div>
-            <h3 className="text-2xl font-semibold text-center mb-8">PDF Unlocked Successfully!</h3>
-            
-            <div className="glass rounded-xl p-6 mb-8">
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-3">
-                  <FileText className="w-8 h-8 text-primary" />
-                  <div>
-                    <p className="font-semibold">{selectedFile?.name}</p>
-                    <p className="text-sm text-muted-foreground">Original file</p>
-                  </div>
-                </div>
-                <Check className="w-6 h-6 text-green-500" />
-              </div>
-              
-              <div className="grid grid-cols-2 gap-4 mt-4">
-                <div className="text-center">
-                  <p className="text-sm text-muted-foreground mb-1">Original Size</p>
-                  <p className="font-bold" data-testid="text-original-size">{formatFileSize(result.originalSize)}</p>
-                </div>
-                <div className="text-center">
-                  <p className="text-sm text-muted-foreground mb-1">Status</p>
-                  <p className="font-bold text-green-600">Unlocked</p>
-                </div>
-              </div>
-            </div>
+  const handleDownload = () => {
+    if (!result || !selectedFile) return;
+    
+    const fileName = selectedFile.name.replace('.pdf', '-unlocked.pdf');
+    const url = URL.createObjectURL(result.unlockedBlob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
 
-            <Alert className="mb-6 border-primary/20 bg-primary/5">
-              <Shield className="h-4 w-4" />
-              <AlertDescription>
-                Your PDF has been successfully unlocked and can now be viewed, edited, and printed without restrictions.
-              </AlertDescription>
-            </Alert>
-
-            <Button 
-              onClick={downloadUnlockedPDF}
-              className="w-full btn-gradient text-white font-semibold mb-4"
-              size="lg"
-              data-testid="button-download"
-            >
-              <Download className="w-5 h-5 mr-2" />
-              Download Unlocked PDF
-            </Button>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <Button 
-                variant="outline" 
-                onClick={resetTool}
-                size="lg"
-                data-testid="button-unlock-another"
-              >
-                Unlock Another File
-              </Button>
-              <Link href="/">
-                <Button variant="ghost" size="lg" className="w-full" data-testid="button-back-tools">
-                  Back to All Tools
-                </Button>
-              </Link>
-            </div>
-          </Card>
-        </div>
-      </div>
-    );
-  }
-
-  if (isProcessing) {
-    return (
-      <div className="min-h-screen pattern-bg">
-        <div className="container mx-auto px-4 py-8 max-w-4xl">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl sm:text-4xl font-bold mb-4 gradient-text">PDF Unlocker</h1>
-            <p className="text-lg text-muted-foreground">Removing password protection...</p>
-          </div>
-
-          <Card className="glass p-12 text-center">
-            <div className="gradient-primary w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6">
-              <KeyRound className="w-10 h-10 text-white animate-pulse" />
-            </div>
-            <h3 className="text-xl font-semibold mb-4">Unlocking PDF...</h3>
-            <p className="text-muted-foreground mb-6" data-testid="text-progress-message">
-              Processing pages and removing protection
-            </p>
-            <div className="max-w-md mx-auto">
-              <Progress value={progress} className="h-3 mb-3" data-testid="progress-unlock" />
-              <p className="text-sm font-medium gradient-text">{progress}% complete</p>
-            </div>
-          </Card>
-        </div>
-      </div>
-    );
-  }
+  const reset = () => {
+    setSelectedFile(null);
+    setResult(null);
+    setError(null);
+    setPassword("");
+    setProgress(0);
+  };
 
   return (
-    <div className="min-h-screen pattern-bg">
-      <ToolSEO 
-        toolName="PDF Unlocker"
-        description="Remove password protection from PDF files securely in your browser"
-        category="UtilitiesApplication"
-        faqs={toolFAQs["unlock-pdf"]}
-        rating={{ value: 4.8, count: 412 }}
-      />
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
-        <Breadcrumbs items={[{ name: "Unlock PDF", url: "/unlock-pdf" }]} />
-        <div className="text-center mb-10">
-          <Link href="/">
-            <Button variant="ghost" className="mb-4" data-testid="button-back">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Tools
-            </Button>
-          </Link>
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary mb-6">
-            <Sparkles className="w-4 h-4" />
-            <span className="text-sm font-medium">100% Secure Processing</span>
+    <Card className="p-8 shadow-xl">
+      {!selectedFile ? (
+        <div className="space-y-8">
+          <FileUpload
+            accept="application/pdf"
+            multiple={false}
+            onFilesSelect={handleFileUpload}
+            className="min-h-[300px]"
+            title="Drop your password-protected PDF here or click to browse"
+            description="Upload the PDF you want to unlock. All processing happens securely in your browser."
+            maxSize={200 * 1024 * 1024} // 200MB
+          />
+          
+          {error && (
+            <Alert variant="destructive">
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
+          
+          {/* Quick Features */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+            <div className="text-center p-6 rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950/30 dark:to-blue-900/20 border border-blue-200 dark:border-blue-800">
+              <Lock className="w-10 h-10 mx-auto mb-3 text-blue-600 dark:text-blue-400" />
+              <h3 className="font-semibold mb-2">Password Protection</h3>
+              <p className="text-sm text-muted-foreground">Remove passwords from protected PDFs</p>
+            </div>
+            <div className="text-center p-6 rounded-xl bg-gradient-to-br from-green-50 to-green-100 dark:from-green-950/30 dark:to-green-900/20 border border-green-200 dark:border-green-800">
+              <Shield className="w-10 h-10 mx-auto mb-3 text-green-600 dark:text-green-400" />
+              <h3 className="font-semibold mb-2">100% Secure</h3>
+              <p className="text-sm text-muted-foreground">Files never leave your browser</p>
+            </div>
+            <div className="text-center p-6 rounded-xl bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-950/30 dark:to-purple-900/20 border border-purple-200 dark:border-purple-800">
+              <Zap className="w-10 h-10 mx-auto mb-3 text-purple-600 dark:text-purple-400" />
+              <h3 className="font-semibold mb-2">Instant Processing</h3>
+              <p className="text-sm text-muted-foreground">Unlock PDFs in seconds</p>
+            </div>
           </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
-            PDF <span className="gradient-text">Unlocker</span>
-          </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Remove password protection from PDF files securely in your browser. 
-            Your files and passwords never leave your device.
-          </p>
         </div>
+      ) : result ? (
+        <div className="space-y-8">
+          <div className="text-center">
+            <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
+              <CheckCircle2 className="w-12 h-12 text-green-600 dark:text-green-400" />
+            </div>
+            <h2 className="text-3xl font-bold mb-3">PDF Unlocked Successfully!</h2>
+            <p className="text-lg text-muted-foreground">
+              Your PDF is now password-free and ready to download
+            </p>
+          </div>
 
-        {/* Privacy Notice */}
-        <PrivacyNotice message="PDF passwords are removed locally. Your files and passwords stay private." />
-
-        {/* Features */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8 max-w-3xl mx-auto">
-          <Card className="glass p-4 text-center">
-            <Shield className="w-8 h-8 text-primary mx-auto mb-2" />
-            <p className="text-sm font-medium">100% Private</p>
-          </Card>
-          <Card className="glass p-4 text-center">
-            <Lock className="w-8 h-8 text-primary mx-auto mb-2" />
-            <p className="text-sm font-medium">Secure Processing</p>
-          </Card>
-          <Card className="glass p-4 text-center">
-            <Zap className="w-8 h-8 text-primary mx-auto mb-2" />
-            <p className="text-sm font-medium">Instant Unlock</p>
-          </Card>
-        </div>
-
-        <FileUpload
-          onFileSelect={handleFileSelect}
-          accept=".pdf,application/pdf"
-          title="Upload your locked PDF"
-          description="Drag & drop or click to select"
-          className="mb-8"
-        />
-
-        {error && (
-          <Alert className="mb-6 border-destructive/20 bg-destructive/10">
-            <AlertCircle className="h-4 w-4" />
-            <AlertDescription data-testid="text-error">
-              {error}
-            </AlertDescription>
-          </Alert>
-        )}
-
-        {selectedFile && (
-          <Card className="glass p-6">
-            <div className="mb-6">
-              <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
-                <FileText className="w-5 h-5 text-primary" />
-                Selected File
-              </h3>
-              <div className="glass rounded-lg p-4 flex items-center justify-between">
-                <span className="text-sm font-medium truncate" data-testid="text-filename">{selectedFile.name}</span>
-                <span className="text-sm font-bold gradient-text" data-testid="text-filesize">{formatFileSize(selectedFile.size)}</span>
+          {/* File Info */}
+          <div className="p-6 rounded-xl border bg-gradient-to-r from-card to-muted/20">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center">
+                  <Unlock className="w-8 h-8 text-white" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-lg">{selectedFile.name.replace('.pdf', '-unlocked.pdf')}</h3>
+                  <p className="text-muted-foreground">
+                    {formatFileSize(result.originalSize)} • Password Removed
+                  </p>
+                </div>
               </div>
             </div>
+          </div>
 
+          {/* Download Button */}
+          <Button 
+            onClick={handleDownload} 
+            size="lg"
+            className="w-full h-14 text-lg font-semibold"
+          >
+            <Download className="w-6 h-6 mr-3" />
+            Download Unlocked PDF
+          </Button>
+
+          {/* Reset Button */}
+          <Button 
+            onClick={reset} 
+            variant="outline"
+            className="w-full h-12 text-lg"
+          >
+            Unlock Another PDF
+          </Button>
+        </div>
+      ) : (
+        <div className="space-y-8">
+          {/* File Info */}
+          <div className="p-6 rounded-xl border-2 bg-gradient-to-r from-card to-muted/20">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-red-500 to-red-600 flex items-center justify-center">
+                  <FileText className="w-8 h-8 text-white" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-lg">{selectedFile.name}</h3>
+                  <p className="text-muted-foreground">
+                    {formatFileSize(selectedFile.size)} • Password Protected
+                  </p>
+                </div>
+              </div>
+              <Button
+                variant="outline"
+                onClick={reset}
+                className="px-6"
+              >
+                Change File
+              </Button>
+            </div>
+          </div>
+
+          {/* Password Input */}
+          <div className="space-y-4">
             <div>
-              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                <KeyRound className="w-5 h-5 text-primary" />
-                Enter Password
-              </h3>
-              
-              <div className="relative mb-6">
+              <label className="text-lg font-semibold mb-4 block">Enter PDF Password</label>
+              <div className="relative">
                 <Input
                   type={showPassword ? "text" : "password"}
-                  placeholder="Enter PDF password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  className="pr-12 h-12 text-base"
-                  data-testid="input-password"
+                  placeholder="Enter the PDF password..."
+                  className="pr-12 h-14 text-lg"
+                  onKeyPress={(e) => e.key === 'Enter' && !isProcessing && unlockPDF()}
                 />
                 <Button
                   type="button"
                   variant="ghost"
                   size="sm"
-                  className="absolute right-1 top-1 h-10 w-10"
+                  className="absolute right-2 top-2 h-10 w-10 p-0"
                   onClick={() => setShowPassword(!showPassword)}
-                  data-testid="button-toggle-password"
                 >
                   {showPassword ? (
-                    <EyeOff className="w-4 h-4" />
+                    <EyeOff className="h-5 w-5" />
                   ) : (
-                    <Eye className="w-4 h-4" />
+                    <Eye className="h-5 w-5" />
                   )}
                 </Button>
               </div>
-
-              <Alert className="mb-6 border-primary/20 bg-primary/5">
-                <Shield className="h-4 w-4" />
-                <AlertDescription>
-                  Your password is used only to unlock the PDF locally. It's never sent to any server.
-                </AlertDescription>
-              </Alert>
-
-              <Button 
-                onClick={unlockPDF}
-                disabled={!password.trim()}
-                className="w-full btn-gradient text-white font-semibold"
-                size="lg"
-                data-testid="button-unlock"
-              >
-                <Unlock className="w-5 h-5 mr-2" />
-                Unlock PDF
-              </Button>
+              <p className="text-sm text-muted-foreground mt-2">
+                This must be the password that was used to protect the PDF
+              </p>
             </div>
-          </Card>
-        )}
-      </div>
+          </div>
 
-      {/* SEO Content Sections */}
-      <HowItWorksSection
-        toolName="PDF Unlocker"
-        steps={[
-          {
-            number: 1,
-            title: "Select Protected PDF",
-            description: "Upload your password-protected PDF file. The file stays in your browser.",
-            icon: FileKey
-          },
-          {
-            number: 2,
-            title: "Enter Known Password",
-            description: "Type the password you know. We don't crack passwords - you must know it.",
-            icon: KeyRound
-          },
-          {
-            number: 3,
-            title: "Download Unlocked PDF",
-            description: "Get your unlocked PDF instantly with all content and quality preserved.",
-            icon: Download
-          }
-        ]}
-      />
+          {error && (
+            <Alert variant="destructive">
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
 
-      <WhyUseSection
-        toolName="PDF Unlocker"
-        benefits={[
-          "Remove password protection from PDFs you own or have permission to access",
-          "Your password and file never leave your browser - 100% private",
-          "Preserves all document formatting, images, and text quality",
-          "Works with PDFs protected by any version of Adobe Acrobat",
-          "No registration, email, or personal information required",
-          "Instant processing - no waiting for server queues",
-          "Free forever with no limits or hidden costs",
-          "Legal tool for accessing your own documents"
-        ]}
-        features={[
-          commonFeatures.privacy,
-          commonFeatures.speed,
-          commonFeatures.free,
-          {
-            icon: Shield,
-            title: "Secure Processing",
-            description: "Your password is never transmitted or stored anywhere.",
-            highlight: true
-          }
-        ]}
-      />
+          {/* Progress Bar */}
+          {isProcessing && (
+            <div className="space-y-4">
+              <Progress value={progress} className="h-4" />
+              <p className="text-center font-medium text-lg">
+                Unlocking PDF... {progress}%
+              </p>
+            </div>
+          )}
 
-      <UseCasesSection
-        useCases={[
-          {
-            title: "Forgotten Restrictions",
-            description: "Remove outdated password protection from your own documents when you still know the password.",
-            icon: Home,
-            example: "Unlock old tax documents or personal records"
-          },
-          {
-            title: "Business Documents",
-            description: "Access password-protected invoices, contracts, or reports shared with you.",
-            icon: Briefcase,
-            example: "Open protected vendor invoices or client contracts"
-          },
-          {
-            title: "Team Collaboration",
-            description: "Remove passwords from shared documents to improve team workflow.",
-            icon: Users,
-            example: "Unlock project documents for easier sharing"
-          },
-          {
-            title: "Archive Management",
-            description: "Process archived documents that no longer need password protection.",
-            icon: Archive,
-            example: "Unlock old company records for digitization"
-          },
-          {
-            title: "Legal Documents",
-            description: "Access legal PDFs shared by lawyers or government agencies.",
-            icon: Building2,
-            example: "Open protected legal agreements or forms"
-          },
-          {
-            title: "Educational Materials",
-            description: "Access password-protected course materials or research papers.",
-            icon: School,
-            example: "Unlock protected lecture notes or study guides"
-          }
-        ]}
-      />
+          {/* Security Notice */}
+          <div className="p-4 rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950/30 dark:to-blue-900/20 border border-blue-200 dark:border-blue-800">
+            <div className="flex items-start gap-3">
+              <Shield className="w-6 h-6 text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0" />
+              <div>
+                <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-2">Security Notice</h4>
+                <p className="text-sm text-blue-700 dark:text-blue-300">
+                  Your PDF and password are processed entirely in your browser. Nothing is uploaded to our servers, 
+                  ensuring complete privacy and security of your sensitive documents.
+                </p>
+              </div>
+            </div>
+          </div>
 
-      <ComparisonSection
-        toolName="PDF Unlocker"
-        comparisons={[
-          { feature: "Password Security", ourTool: "Never transmitted", others: "Sent to servers", highlight: true },
-          { feature: "Processing Location", ourTool: "Your browser only", others: "Cloud servers" },
-          { feature: "File Privacy", ourTool: "100% private", others: "Stored temporarily" },
-          { feature: "Speed", ourTool: "Instant", others: "Queue wait times" },
-          { feature: "File Size Limit", ourTool: "Device memory only", others: "10-50MB typical" },
-          { feature: "Registration", ourTool: false, others: "Email required" },
-          { feature: "Usage Limits", ourTool: "Unlimited", others: "3-5 files/day" },
-          { feature: "Quality Preserved", ourTool: "100%", others: "May compress" },
-          { feature: "Works Offline", ourTool: true, others: false },
-          { feature: "Cost", ourTool: "Free forever", others: "Freemium model" }
-        ]}
-      />
+          {/* Action Button */}
+          <Button
+            onClick={unlockPDF}
+            disabled={isProcessing || !password.trim()}
+            className="w-full h-14 text-lg font-semibold"
+            size="lg"
+          >
+            {isProcessing ? (
+              <>
+                <Loader2 className="w-6 h-6 mr-3 animate-spin" />
+                Unlocking PDF... {progress}%
+              </>
+            ) : (
+              <>
+                <KeyRound className="w-6 h-6 mr-3" />
+                Unlock PDF
+              </>
+            )}
+          </Button>
+        </div>
+      )}
+    </Card>
+  );
+}
 
-      <ToolFAQ 
-        faqs={generatePDFUnlockFAQs()}
-        toolName="PDF Unlocker"
-        toolPath="/unlock-pdf"
-      />
-    </div>
+// Main Component with Layout
+export default function UnlockPDF() {
+  const contentData = toolContentData["unlock-pdf"];
+  
+  useSEO({
+    title: "Unlock PDF Files Online - Remove PDF Password Free | AltafToolsHub",
+    description: "Free online PDF unlocker to remove password protection from PDFs. 100% secure client-side processing. Your files and passwords never leave your browser.",
+    path: "/unlock-pdf",
+    keywords: "unlock pdf, remove pdf password, pdf unlocker, pdf password remover, decrypt pdf, unlock protected pdf, free pdf unlocker, online pdf unlock, pdf security remover 2025",
+    ogImage: "https://www.altaftoolshub.com/og-unlock-pdf.png",
+    structuredData: [{
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "PDF Unlocker - AltafToolsHub",
+      "description": "Secure PDF password remover. Unlock password-protected PDFs directly in your browser with complete privacy.",
+      "url": "https://www.altaftoolshub.com/unlock-pdf",
+      "applicationCategory": "SecurityApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "ratingCount": "1234"
+      }
+    }],
+    additionalMetaTags: [
+      { name: "application-name", content: "PDF Unlocker - AltafToolsHub" },
+      { property: "article:section", content: "PDF Tools" },
+      { property: "article:modified_time", content: new Date().toISOString() }
+    ]
+  });
+
+  return (
+    <ToolPageLayout
+      toolName="Unlock PDF Files"
+      description="Remove password protection from PDFs securely in your browser. Your files and passwords never leave your device, ensuring complete privacy."
+      trustBadge={contentData.trustBadge}
+      trustIndicators={contentData.trustIndicators}
+      toolComponent={<UnlockPDFTool />}
+      howItWorksSteps={contentData.howItWorksSteps}
+      processingTime={contentData.processingTime}
+      whyChooseData={contentData.whyChooseData}
+      useCases={contentData.useCases}
+      comparisons={contentData.comparisons}
+      faqs={contentData.faqs}
+      ratings={contentData.ratings}
+      breadcrumbPath="/unlock-pdf"
+      categoryName="PDF Tools"
+      categoryPath="/all-tools?category=pdf-management"
+    />
   );
 }
