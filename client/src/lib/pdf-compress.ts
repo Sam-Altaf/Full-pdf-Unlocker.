@@ -251,7 +251,7 @@ async function createPDFFromImages(
   });
 
   if (onProgress) {
-    onProgress(95, 'Finalizing compression...');
+    onProgress(95, '');
   }
 
   return pdfBytes;

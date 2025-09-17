@@ -32,7 +32,6 @@ export interface ToolPageLayoutProps {
     icon?: React.ElementType;
   }>;
   
-  processingTime?: string;
   
   whyChooseData: {
     benefits: string[];
@@ -88,7 +87,6 @@ export default function ToolPageLayout({
   trustIndicators,
   toolComponent,
   howItWorksSteps,
-  processingTime = "Less than 5 seconds",
   whyChooseData,
   useCases,
   comparisons,
@@ -193,7 +191,6 @@ export default function ToolPageLayout({
           <section className="py-8 text-center">
             <div className="inline-flex items-center gap-2 px-6 py-3 bg-green-500/10 text-green-600 dark:text-green-400 rounded-full">
               <Zap className="w-5 h-5" />
-              <span className="font-medium">⚡ Processing time: {processingTime}</span>
             </div>
           </section>
 

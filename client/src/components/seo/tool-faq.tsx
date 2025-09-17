@@ -184,7 +184,7 @@ export const commonFAQs = {
   },
   speed: {
     question: "How fast is the processing?",
-    answer: "Processing speed depends on your device's performance and file size. Since everything happens locally in your browser, there's no upload/download time. Most files are processed within seconds.",
+    answer: "Processing speed depends on your device's performance and file size. Since everything happens locally in your browser, there's no upload/download time.",
     category: "Performance"
   }
 };
