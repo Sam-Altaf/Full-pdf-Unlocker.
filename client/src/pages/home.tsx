@@ -1069,14 +1069,13 @@ export default function Home() {
                       acc[item.category].push(item);
                       return acc;
                     }, {} as Record<string, typeof platformComparison>)
-                  ).map(([category, items]) => (
-                    <React.Fragment key={category}>
-                      <TableRow className="bg-muted/30">
+                  ).flatMap(([category, items]) => [
+                      <TableRow key={`${category}-header`} className="bg-muted/30">
                         <TableCell colSpan={6} className="font-semibold text-sm">
                           {category}
                         </TableCell>
-                      </TableRow>
-                      {items.map((item, idx) => (
+                      </TableRow>,
+                      ...items.map((item, idx) => (
                         <TableRow 
                           key={`${category}-${idx}`}
                           className={cn(
@@ -1176,9 +1175,9 @@ export default function Home() {
                             )}
                           </TableCell>
                         </TableRow>
-                      ))}
-                    </React.Fragment>
-                  ))}
+                      ))
+                    ]
+                  )}
                 </TableBody>
               </Table>
             </div>
