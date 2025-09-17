@@ -459,7 +459,7 @@ export default function RotatePDF() {
                           <div className="mb-6">
                             <Progress value={progress} className="h-2" />
                             <p className="text-sm text-center mt-2 text-muted-foreground">
-                              {progress}%
+                              Applying rotation... {progress}%
                             </p>
                           </div>
                         )}

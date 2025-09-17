@@ -123,12 +123,12 @@ export default function ExtractText() {
 
     setIsProcessing(true);
     setProgress(0);
-    setProgressStatus("");
+    setProgressStatus("Initializing OCR engine...");
     setError(null);
 
     try {
       // Modern Tesseract.js API with enhanced accuracy settings
-      setProgressStatus("");
+      setProgressStatus(`Initializing OCR for ${language}...`);
       setProgress(20);
       
       const worker = await Tesseract.createWorker(language, 1, {
@@ -149,7 +149,7 @@ export default function ExtractText() {
         user_defined_dpi: '300', // Higher DPI for better recognition
       });
       
-      setProgressStatus("");
+      setProgressStatus('Extracting text from image...');
       setProgress(50);
       
       // Process image with enhanced settings
@@ -159,7 +159,7 @@ export default function ExtractText() {
       });
       
       setProgress(90);
-      setProgressStatus("");
+      setProgressStatus('Finalizing...');
       
       await worker.terminate();
 
@@ -400,7 +400,7 @@ export default function ExtractText() {
                     {isProcessing ? (
                       <>
                         <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                        Processing...
+                        Extracting Text...
                       </>
                     ) : (
                       <>

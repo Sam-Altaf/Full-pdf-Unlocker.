@@ -404,7 +404,7 @@ function SplitPDFTool() {
                 <div className="space-y-4">
                   <Progress value={progress} className="h-4" />
                   <p className="text-center font-medium text-lg">
-                    {progress}%
+                    Splitting PDF... {progress}%
                   </p>
                 </div>
               )}
@@ -419,7 +419,7 @@ function SplitPDFTool() {
                 {isProcessing ? (
                   <>
                     <Loader2 className="w-6 h-6 mr-3 animate-spin" />
-                    {progress}%
+                    Splitting PDF... {progress}%
                   </>
                 ) : (
                   <>

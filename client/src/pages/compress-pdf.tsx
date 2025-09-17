@@ -151,7 +151,7 @@ function CompressPDFTool() {
 
     setIsProcessing(true);
     setProgress(0);
-    setProgressMessage('');
+    setProgressMessage('Preparing compression...');
     setError(null);
 
     try {

@@ -93,6 +93,7 @@ export const toolContentData: Record<string, ToolContentData> = {
         icon: FileDown
       }
     ],
+    processingTime: "Less than 10 seconds",
     whyChooseData: {
       benefits: [
         "Process files locally - no server uploads for complete privacy",
