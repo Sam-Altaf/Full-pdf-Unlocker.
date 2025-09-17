@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useToast } from "@/hooks/use-toast";
+import { useSEO } from "@/hooks/use-seo";
 import { Scissors, Upload, Download, FileText, Loader2, CheckCircle2 } from "lucide-react";
 import FileUpload from "@/components/ui/file-upload";
 import { PDFDocument } from "pdf-lib";
