@@ -125,13 +125,10 @@ export function UseCasesSection({ useCases }: UseCasesSectionProps) {
 interface ComparisonItem {
   feature: string;
   ourTool: boolean | string;
-  adobeAcrobat?: boolean | string;
-  smallPDF?: boolean | string;
-  iLovePDF?: boolean | string;
-  pdf24?: boolean | string;
-  others?: boolean | string; // Legacy support
   highlight?: boolean;
   category?: string;
+  // Allow any competitor columns dynamically
+  [competitorName: string]: boolean | string | undefined;
 }
 
 interface ComparisonSectionProps {
@@ -149,13 +146,20 @@ export function ComparisonSection({ toolName, comparisons }: ComparisonSectionPr
     return acc;
   }, {} as Record<string, ComparisonItem[]>) : { "All Features": comparisons };
 
+  // Detect competitor columns dynamically (excluding known non-competitor fields)
+  const knownFields = ['feature', 'ourTool', 'highlight', 'category', 'others'];
+  const competitorColumns = new Set<string>();
+  
+  comparisons.forEach(item => {
+    Object.keys(item).forEach(key => {
+      if (!knownFields.includes(key)) {
+        competitorColumns.add(key);
+      }
+    });
+  });
+  
   // Check if we have new format data (with specific competitor columns)
-  const hasCompetitorData = comparisons.some(item => 
-    item.adobeAcrobat !== undefined || 
-    item.smallPDF !== undefined || 
-    item.iLovePDF !== undefined || 
-    item.pdf24 !== undefined
-  );
+  const hasCompetitorData = competitorColumns.size > 0;
 
   const renderCellValue = (value: boolean | string | undefined) => {
     if (value === undefined) return <span className="text-muted-foreground">—</span>;
@@ -179,6 +183,30 @@ export function ComparisonSection({ toolName, comparisons }: ComparisonSectionPr
     return <span className="text-foreground">{value}</span>;
   };
 
+  // Format competitor names for display
+  const formatCompetitorName = (key: string) => {
+    const nameMap: Record<string, { display: string; subtitle?: string }> = {
+      adobeAcrobat: { display: "Adobe Acrobat", subtitle: "Premium" },
+      smallPDF: { display: "SmallPDF", subtitle: "Popular" },
+      iLovePDF: { display: "iLovePDF", subtitle: "Free/Paid" },
+      pdf24: { display: "PDF24", subtitle: "Free" },
+      qrCode: { display: "QRCode.com", subtitle: "Popular" },
+      qrStuff: { display: "QR Stuff", subtitle: "Professional" },
+      qrCodeGenerator: { display: "QR Code Generator", subtitle: "Enterprise" },
+      theQrCodeGenerator: { display: "The QR Code Generator", subtitle: "Free" },
+      lastPass: { display: "LastPass", subtitle: "Popular" },
+      dashlane: { display: "Dashlane", subtitle: "Premium" },
+      keeper: { display: "Keeper", subtitle: "Secure" },
+      bitwarden: { display: "Bitwarden", subtitle: "Open Source" },
+      qrCodeMonkey: { display: "QRCode Monkey", subtitle: "Creative" },
+      goQR: { display: "GoQR", subtitle: "Free" }
+    };
+    return nameMap[key] || { display: key.replace(/([A-Z])/g, ' $1').trim() };
+  };
+
+  // Convert set to sorted array for consistent ordering
+  const competitorList = Array.from(competitorColumns).sort();
+
   if (hasCompetitorData) {
     // New detailed competitor comparison table
     return (
@@ -189,7 +217,7 @@ export function ComparisonSection({ toolName, comparisons }: ComparisonSectionPr
               {toolName} vs. Popular Competitors
             </h2>
             <p className="text-lg text-muted-foreground mb-8">
-              Comprehensive comparison with industry-leading PDF tools - See why AltafToolsHub stands out
+              Comprehensive comparison with industry-leading tools - See why AltafToolsHub stands out
             </p>
           </header>
           
@@ -204,30 +232,19 @@ export function ComparisonSection({ toolName, comparisons }: ComparisonSectionPr
                       <span className="text-xs text-green-600 dark:text-green-400">✨ Our Solution</span>
                     </div>
                   </th>
-                  <th className="text-center p-4 font-semibold text-muted-foreground border-b border-l min-w-[140px]">
-                    <div className="flex flex-col items-center gap-1">
-                      <span>Adobe Acrobat</span>
-                      <span className="text-xs text-orange-600 dark:text-orange-400">Premium</span>
-                    </div>
-                  </th>
-                  <th className="text-center p-4 font-semibold text-muted-foreground border-b border-l min-w-[140px]">
-                    <div className="flex flex-col items-center gap-1">
-                      <span>SmallPDF</span>
-                      <span className="text-xs text-muted-foreground">Popular</span>
-                    </div>
-                  </th>
-                  <th className="text-center p-4 font-semibold text-muted-foreground border-b border-l min-w-[140px]">
-                    <div className="flex flex-col items-center gap-1">
-                      <span>iLovePDF</span>
-                      <span className="text-xs text-muted-foreground">Free/Paid</span>
-                    </div>
-                  </th>
-                  <th className="text-center p-4 font-semibold text-muted-foreground border-b border-l min-w-[140px]">
-                    <div className="flex flex-col items-center gap-1">
-                      <span>PDF24</span>
-                      <span className="text-xs text-muted-foreground">Free</span>
-                    </div>
-                  </th>
+                  {competitorList.map((competitor) => {
+                    const competitorInfo = formatCompetitorName(competitor);
+                    return (
+                      <th key={competitor} className="text-center p-4 font-semibold text-muted-foreground border-b border-l min-w-[140px]">
+                        <div className="flex flex-col items-center gap-1">
+                          <span>{competitorInfo.display}</span>
+                          {competitorInfo.subtitle && (
+                            <span className="text-xs text-muted-foreground">{competitorInfo.subtitle}</span>
+                          )}
+                        </div>
+                      </th>
+                    );
+                  })}
                 </tr>
               </thead>
               <tbody>
@@ -235,7 +252,7 @@ export function ComparisonSection({ toolName, comparisons }: ComparisonSectionPr
                   <React.Fragment key={`category-${catIndex}`}>
                     {hasCategories && (
                       <tr className="bg-muted/30">
-                        <td colSpan={6} className="p-3 font-semibold text-sm uppercase tracking-wider text-muted-foreground">
+                        <td colSpan={2 + competitorList.length} className="p-3 font-semibold text-sm uppercase tracking-wider text-muted-foreground">
                           {category}
                         </td>
                       </tr>
@@ -255,18 +272,11 @@ export function ComparisonSection({ toolName, comparisons }: ComparisonSectionPr
                         <td className="text-center p-4 border-b bg-primary/5">
                           {renderCellValue(item.ourTool)}
                         </td>
-                        <td className="text-center p-4 border-b border-l">
-                          {renderCellValue(item.adobeAcrobat)}
-                        </td>
-                        <td className="text-center p-4 border-b border-l">
-                          {renderCellValue(item.smallPDF)}
-                        </td>
-                        <td className="text-center p-4 border-b border-l">
-                          {renderCellValue(item.iLovePDF)}
-                        </td>
-                        <td className="text-center p-4 border-b border-l">
-                          {renderCellValue(item.pdf24)}
-                        </td>
+                        {competitorList.map((competitor) => (
+                          <td key={competitor} className="text-center p-4 border-b border-l">
+                            {renderCellValue(item[competitor])}
+                          </td>
+                        ))}
                       </tr>
                     ))}
                   </React.Fragment>
@@ -283,8 +293,8 @@ export function ComparisonSection({ toolName, comparisons }: ComparisonSectionPr
                 <div>
                   <h3 className="font-semibold mb-2 text-green-900 dark:text-green-100">100% Privacy Guaranteed</h3>
                   <p className="text-sm text-green-700 dark:text-green-300">
-                    Unlike all competitors listed above, AltafToolsHub never uploads your files to any server. 
-                    All processing happens locally in your browser, ensuring complete data privacy and security.
+                    Unlike server-based competitors, AltafToolsHub processes everything locally in your browser. 
+                    Your data never leaves your device, ensuring complete privacy and security.
                   </p>
                 </div>
               </div>
@@ -294,10 +304,10 @@ export function ComparisonSection({ toolName, comparisons }: ComparisonSectionPr
               <div className="flex items-start gap-3">
                 <Zap className="w-6 h-6 text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0" />
                 <div>
-                  <h3 className="font-semibold mb-2 text-blue-900 dark:text-blue-100">No Hidden Costs</h3>
+                  <h3 className="font-semibold mb-2 text-blue-900 dark:text-blue-100">Completely Free Forever</h3>
                   <p className="text-sm text-blue-700 dark:text-blue-300">
-                    While competitors charge $10-20/month or add watermarks to free versions, 
-                    AltafToolsHub provides all features completely free, forever, with no watermarks or limitations.
+                    While competitors often charge monthly subscriptions or add limitations to free versions, 
+                    AltafToolsHub provides all features completely free, forever, with no watermarks or restrictions.
                   </p>
                 </div>
               </div>
@@ -308,8 +318,8 @@ export function ComparisonSection({ toolName, comparisons }: ComparisonSectionPr
           <div className="mt-6 p-4 bg-amber-50 dark:bg-amber-950/30 rounded-lg border border-amber-200 dark:border-amber-800">
             <p className="text-sm text-amber-800 dark:text-amber-200">
               <strong>Note:</strong> Competitor features and pricing are based on publicly available information as of 2025. 
-              Adobe Acrobat Pro costs $19.99/month, SmallPDF Pro costs $12/month, iLovePDF Premium costs $7/month. 
-              Free versions of these tools often have significant limitations.
+              Most competitors charge monthly subscriptions ranging from $3 to $20 per month. 
+              Free versions of competitor tools often have significant limitations including watermarks, usage limits, or reduced features.
             </p>
           </div>
         </article>

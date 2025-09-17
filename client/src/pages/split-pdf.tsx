@@ -545,7 +545,7 @@ export default function SplitPDF() {
       processingTime={contentData.processingTime}
       whyChooseData={contentData.whyChooseData}
       useCases={contentData.useCases}
-      comparisons={contentData.comparisons}
+      comparisons={contentData.comparisons as any}
       faqs={contentData.faqs}
       ratings={contentData.ratings}
       breadcrumbPath="/split-pdf"

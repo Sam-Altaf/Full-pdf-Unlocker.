@@ -3,7 +3,8 @@ import {
   Scissors, FilePlus, Unlock, Image, QrCode, KeyRound,
   Clock, Globe, RefreshCw, CheckCircle, Target,
   Briefcase, School, Mail, FileText, Camera, Share2,
-  BookOpen, CreditCard, AlertCircle, Server, Smartphone
+  BookOpen, CreditCard, AlertCircle, Server, Smartphone,
+  Download, RotateCw
 } from "lucide-react";
 import { generatePDFCompressFAQs, generatePDFUnlockFAQs, generateJPGtoPDFFAQs, generateQRGeneratorFAQs } from "@/components/seo/tool-faq";
 
@@ -39,8 +40,10 @@ export interface ToolContentData {
   comparisons: Array<{
     feature: string;
     ourTool: boolean | string;
-    others: boolean | string;
+    category?: string;
     highlight?: boolean;
+    // Allow any competitor columns dynamically
+    [competitorName: string]: boolean | string | undefined;
   }>;
   faqs: Array<{
     question: string;
@@ -58,6 +61,213 @@ export interface ToolContentData {
     }>;
   };
 }
+
+// Platform Comparison Data for Home Page
+export const platformComparison = [
+  // Privacy & Security
+  {
+    feature: "100% Client-Side Processing",
+    altafToolsHub: true,
+    adobeAcrobat: false,
+    smallPDF: false,
+    iLovePDF: false,
+    pdf24: false,
+    category: "Privacy & Security",
+    highlight: true
+  },
+  {
+    feature: "No File Upload Required",
+    altafToolsHub: true,
+    adobeAcrobat: false,
+    smallPDF: false,
+    iLovePDF: false,
+    pdf24: false,
+    category: "Privacy & Security",
+    highlight: true
+  },
+  {
+    feature: "Works Offline",
+    altafToolsHub: true,
+    adobeAcrobat: false,
+    smallPDF: false,
+    iLovePDF: false,
+    pdf24: false,
+    category: "Privacy & Security"
+  },
+  {
+    feature: "Data Encryption",
+    altafToolsHub: "Local only",
+    adobeAcrobat: "In transit",
+    smallPDF: "256-bit",
+    iLovePDF: "SSL/TLS",
+    pdf24: "SSL/TLS",
+    category: "Privacy & Security"
+  },
+  // Pricing
+  {
+    feature: "Monthly Cost",
+    altafToolsHub: "$0",
+    adobeAcrobat: "$19.99",
+    smallPDF: "$12",
+    iLovePDF: "$9",
+    pdf24: "$0",
+    category: "Pricing",
+    highlight: true
+  },
+  {
+    feature: "Annual Cost",
+    altafToolsHub: "$0",
+    adobeAcrobat: "$239.88",
+    smallPDF: "$108",
+    iLovePDF: "$48",
+    pdf24: "$0",
+    category: "Pricing",
+    highlight: true
+  },
+  {
+    feature: "Free Tier Tools",
+    altafToolsHub: "All 60+ tools",
+    adobeAcrobat: "3 tools",
+    smallPDF: "21 tools (limited)",
+    iLovePDF: "24 tools (limited)",
+    pdf24: "All tools",
+    category: "Pricing"
+  },
+  // Features & Capabilities
+  {
+    feature: "Total Tools Available",
+    altafToolsHub: "60+ (32 active)",
+    adobeAcrobat: "20+",
+    smallPDF: "21",
+    iLovePDF: "24",
+    pdf24: "30+",
+    category: "Features & Capabilities"
+  },
+  {
+    feature: "PDF Tools",
+    altafToolsHub: "20+",
+    adobeAcrobat: "All",
+    smallPDF: "All",
+    iLovePDF: "All",
+    pdf24: "All",
+    category: "Features & Capabilities"
+  },
+  {
+    feature: "Image Tools",
+    altafToolsHub: "15+",
+    adobeAcrobat: "Limited",
+    smallPDF: "Limited",
+    iLovePDF: "Basic",
+    pdf24: "Basic",
+    category: "Features & Capabilities"
+  },
+  {
+    feature: "Text & Document Tools",
+    altafToolsHub: "10+",
+    adobeAcrobat: "Limited",
+    smallPDF: false,
+    iLovePDF: false,
+    pdf24: "Basic",
+    category: "Features & Capabilities"
+  },
+  {
+    feature: "Developer Tools",
+    altafToolsHub: "8+",
+    adobeAcrobat: false,
+    smallPDF: false,
+    iLovePDF: false,
+    pdf24: false,
+    category: "Features & Capabilities"
+  },
+  // Limitations
+  {
+    feature: "Daily Usage Limit",
+    altafToolsHub: "Unlimited",
+    adobeAcrobat: "Unlimited (Pro)",
+    smallPDF: "2 files (Free)",
+    iLovePDF: "1 file/hour",
+    pdf24: "Unlimited",
+    category: "Limitations",
+    highlight: true
+  },
+  {
+    feature: "File Size Limit",
+    altafToolsHub: "No limit",
+    adobeAcrobat: "100MB",
+    smallPDF: "5GB (Pro)",
+    iLovePDF: "500MB",
+    pdf24: "100MB",
+    category: "Limitations",
+    highlight: true
+  },
+  {
+    feature: "Batch Processing",
+    altafToolsHub: true,
+    adobeAcrobat: "Pro only",
+    smallPDF: "Pro only",
+    iLovePDF: "Premium only",
+    pdf24: true,
+    category: "Limitations"
+  },
+  // Performance
+  {
+    feature: "Average Processing Time",
+    altafToolsHub: "<1 second",
+    adobeAcrobat: "10-30 seconds",
+    smallPDF: "5-20 seconds",
+    iLovePDF: "5-15 seconds",
+    pdf24: "10-20 seconds",
+    category: "Performance",
+    highlight: true
+  },
+  {
+    feature: "Server Dependency",
+    altafToolsHub: "None",
+    adobeAcrobat: "Required",
+    smallPDF: "Required",
+    iLovePDF: "Required",
+    pdf24: "Required",
+    category: "Performance"
+  },
+  // User Experience
+  {
+    feature: "Registration Required",
+    altafToolsHub: false,
+    adobeAcrobat: true,
+    smallPDF: "For Pro",
+    iLovePDF: "For Premium",
+    pdf24: false,
+    category: "User Experience"
+  },
+  {
+    feature: "Email Required",
+    altafToolsHub: false,
+    adobeAcrobat: true,
+    smallPDF: "For download",
+    iLovePDF: "Optional",
+    pdf24: false,
+    category: "User Experience"
+  },
+  {
+    feature: "Ads & Popups",
+    altafToolsHub: false,
+    adobeAcrobat: false,
+    smallPDF: "Free version",
+    iLovePDF: "Free version",
+    pdf24: "Minimal",
+    category: "User Experience"
+  },
+  {
+    feature: "Watermarks",
+    altafToolsHub: "Never",
+    adobeAcrobat: "Never",
+    smallPDF: "Free version",
+    iLovePDF: "Some tools",
+    pdf24: "Never",
+    category: "User Experience",
+    highlight: true
+  }
+];
 
 export const toolContentData: Record<string, ToolContentData> = {
   "split-pdf": {
@@ -1432,46 +1642,178 @@ export const toolContentData: Record<string, ToolContentData> = {
       }
     ],
     comparisons: [
+      // Privacy & Security
       {
-        feature: "Image Format Support",
-        ourTool: "All Major Formats",
-        others: "JPG/PNG Only",
+        feature: "File Processing Location",
+        ourTool: "100% Browser-based",
+        adobeAcrobat: "Cloud servers",
+        smallPDF: "Cloud servers",
+        iLovePDF: "Cloud servers",
+        pdf24: "Cloud/Desktop",
+        category: "Privacy & Security",
         highlight: true
       },
       {
-        feature: "Privacy Protection",
-        ourTool: "No EXIF Data Transfer",
-        others: "Metadata Often Retained"
+        feature: "EXIF Data Handling",
+        ourTool: "Never transferred",
+        adobeAcrobat: "May retain",
+        smallPDF: "Retained",
+        iLovePDF: "Retained",
+        pdf24: "Stripped",
+        category: "Privacy & Security"
+      },
+      // Pricing
+      {
+        feature: "Basic Access",
+        ourTool: "Free",
+        adobeAcrobat: "$19.99/month",
+        smallPDF: "Free (2/day)",
+        iLovePDF: "Free (limited)",
+        pdf24: "Free",
+        category: "Pricing",
+        highlight: true
       },
       {
-        feature: "Layout Options",
-        ourTool: "Multiple Per Page",
-        others: "One Per Page Only"
+        feature: "Premium Features",
+        ourTool: "Free",
+        adobeAcrobat: "Included",
+        smallPDF: "$12/month",
+        iLovePDF: "$7/month",
+        pdf24: "Free",
+        category: "Pricing"
+      },
+      // Image Conversion Features
+      {
+        feature: "Supported Formats",
+        ourTool: "JPG, PNG, WebP, GIF, BMP, TIFF",
+        adobeAcrobat: "JPG, PNG, BMP, TIFF",
+        smallPDF: "JPG, PNG",
+        iLovePDF: "JPG",
+        pdf24: "JPG, PNG, BMP",
+        category: "Image Conversion Features",
+        highlight: true
       },
       {
-        feature: "Quality Control",
-        ourTool: "Low to Maximum",
-        others: "Fixed Quality"
-      },
-      {
-        feature: "Reordering",
-        ourTool: "Drag & Drop",
-        others: "Upload Order Only"
+        feature: "Multiple Per Page",
+        ourTool: "1-9 images",
+        adobeAcrobat: "1 only",
+        smallPDF: "1 only",
+        iLovePDF: "1 only",
+        pdf24: "1-4 images",
+        category: "Image Conversion Features"
       },
       {
         feature: "Page Sizes",
         ourTool: "A4, Letter, Legal, A3, A5",
-        others: "Limited Sizes"
+        adobeAcrobat: "A4, Letter",
+        smallPDF: "A4 only",
+        iLovePDF: "A4, Letter",
+        pdf24: "Multiple sizes",
+        category: "Image Conversion Features"
       },
       {
-        feature: "Batch Processing",
-        ourTool: "Unlimited Images",
-        others: "10-50 Image Limits"
+        feature: "Quality Settings",
+        ourTool: "Low/Medium/High/Max",
+        adobeAcrobat: "Auto only",
+        smallPDF: "Auto only",
+        iLovePDF: "Low/High",
+        pdf24: "Slider control",
+        category: "Image Conversion Features"
       },
       {
-        feature: "Cost",
-        ourTool: "Free Forever",
-        others: "Limited Free Usage"
+        feature: "Drag & Drop Reorder",
+        ourTool: true,
+        adobeAcrobat: true,
+        smallPDF: "Pro only",
+        iLovePDF: true,
+        pdf24: true,
+        category: "Image Conversion Features"
+      },
+      // Limitations
+      {
+        feature: "Image Count Limit",
+        ourTool: "Unlimited",
+        adobeAcrobat: "20 images",
+        smallPDF: "150 images (Pro)",
+        iLovePDF: "80 images",
+        pdf24: "100 images",
+        category: "Limitations",
+        highlight: true
+      },
+      {
+        feature: "File Size Limit",
+        ourTool: "No limit",
+        adobeAcrobat: "100MB",
+        smallPDF: "5GB (Pro)",
+        iLovePDF: "200MB",
+        pdf24: "100MB",
+        category: "Limitations"
+      },
+      {
+        feature: "Daily Usage Limit",
+        ourTool: "Unlimited",
+        adobeAcrobat: "Unlimited",
+        smallPDF: "2 files (Free)",
+        iLovePDF: "1 per hour",
+        pdf24: "Unlimited",
+        category: "Limitations"
+      },
+      // Performance
+      {
+        feature: "Processing Speed",
+        ourTool: "3-10 seconds",
+        adobeAcrobat: "15-30 seconds",
+        smallPDF: "10-20 seconds",
+        iLovePDF: "10-25 seconds",
+        pdf24: "15-25 seconds",
+        category: "Performance",
+        highlight: true
+      },
+      {
+        feature: "Upload Required",
+        ourTool: false,
+        adobeAcrobat: true,
+        smallPDF: true,
+        iLovePDF: true,
+        pdf24: "Optional",
+        category: "Performance"
+      },
+      {
+        feature: "Offline Support",
+        ourTool: true,
+        adobeAcrobat: false,
+        smallPDF: false,
+        iLovePDF: false,
+        pdf24: "Desktop only",
+        category: "Performance"
+      },
+      // User Experience
+      {
+        feature: "Registration Required",
+        ourTool: false,
+        adobeAcrobat: true,
+        smallPDF: "For Pro",
+        iLovePDF: "For Premium",
+        pdf24: false,
+        category: "User Experience"
+      },
+      {
+        feature: "Email Required",
+        ourTool: false,
+        adobeAcrobat: true,
+        smallPDF: "Optional",
+        iLovePDF: "Optional",
+        pdf24: false,
+        category: "User Experience"
+      },
+      {
+        feature: "Watermarks",
+        ourTool: "Never",
+        adobeAcrobat: "Never",
+        smallPDF: "Free version",
+        iLovePDF: "Some features",
+        pdf24: "Never",
+        category: "User Experience"
       }
     ],
     faqs: generateJPGtoPDFFAQs(),
@@ -1607,46 +1949,196 @@ export const toolContentData: Record<string, ToolContentData> = {
       }
     ],
     comparisons: [
+      // Privacy & Security
       {
-        feature: "Data Capacity",
-        ourTool: "4,296 Characters",
-        others: "Limited Capacity",
+        feature: "Processing Location",
+        ourTool: "100% Local",
+        qrCode: "Server-based",
+        qrStuff: "Server-based",
+        qrCodeGenerator: "Server-based",
+        theQrCodeGenerator: "Browser-based",
+        category: "Privacy & Security",
         highlight: true
       },
       {
-        feature: "Customization",
-        ourTool: "Colors & Sizes",
-        others: "Black & White Only"
+        feature: "Tracking/Analytics",
+        ourTool: "No tracking",
+        qrCode: "Click tracking",
+        qrStuff: "Analytics included",
+        qrCodeGenerator: "Basic analytics",
+        theQrCodeGenerator: "No tracking",
+        category: "Privacy & Security"
       },
       {
-        feature: "Privacy",
-        ourTool: "No Tracking/Analytics",
-        others: "Often Tracked"
+        feature: "Data Retention",
+        ourTool: "Never stored",
+        qrCode: "Stored for tracking",
+        qrStuff: "Permanent storage",
+        qrCodeGenerator: "30 days",
+        theQrCodeGenerator: "Not stored",
+        category: "Privacy & Security"
+      },
+      // Pricing
+      {
+        feature: "Basic Access",
+        ourTool: "Free",
+        qrCode: "$8/month",
+        qrStuff: "Free (limited)",
+        qrCodeGenerator: "Free (basic)",
+        theQrCodeGenerator: "Free",
+        category: "Pricing",
+        highlight: true
       },
       {
-        feature: "Quality",
-        ourTool: "High-Res PNG",
-        others: "Low-Res Images"
+        feature: "Premium Features",
+        ourTool: "Free",
+        qrCode: "Included",
+        qrStuff: "$9.99/month",
+        qrCodeGenerator: "$15/month",
+        theQrCodeGenerator: "$5/month",
+        category: "Pricing"
+      },
+      {
+        feature: "Commercial Use",
+        ourTool: "Free",
+        qrCode: "Pro only",
+        qrStuff: "Paid only",
+        qrCodeGenerator: "Premium only",
+        theQrCodeGenerator: "Free",
+        category: "Pricing"
+      },
+      // QR Code Features
+      {
+        feature: "Data Capacity",
+        ourTool: "4,296 chars",
+        qrCode: "2,953 chars",
+        qrStuff: "3,000 chars",
+        qrCodeGenerator: "4,296 chars",
+        theQrCodeGenerator: "4,296 chars",
+        category: "QR Code Features",
+        highlight: true
+      },
+      {
+        feature: "Custom Colors",
+        ourTool: true,
+        qrCode: "Pro only",
+        qrStuff: "Paid only",
+        qrCodeGenerator: "Premium only",
+        theQrCodeGenerator: true,
+        category: "QR Code Features"
+      },
+      {
+        feature: "Size Options",
+        ourTool: "3 sizes",
+        qrCode: "Custom sizes",
+        qrStuff: "5 presets",
+        qrCodeGenerator: "Custom",
+        theQrCodeGenerator: "1 size",
+        category: "QR Code Features"
       },
       {
         feature: "Error Correction",
-        ourTool: "Professional Levels",
-        others: "Basic Only"
+        ourTool: "Medium (15%)",
+        qrCode: "All levels",
+        qrStuff: "High (30%)",
+        qrCodeGenerator: "All levels",
+        theQrCodeGenerator: "Low (7%)",
+        category: "QR Code Features"
       },
       {
-        feature: "Permanence",
-        ourTool: "Static (Never Expires)",
-        others: "May Expire/Redirect"
+        feature: "Output Format",
+        ourTool: "PNG",
+        qrCode: "PNG, SVG, EPS",
+        qrStuff: "PNG, SVG",
+        qrCodeGenerator: "PNG, SVG, PDF",
+        theQrCodeGenerator: "PNG",
+        category: "QR Code Features"
       },
       {
-        feature: "Cost",
-        ourTool: "Free Forever",
-        others: "Freemium/Paid"
+        feature: "Logo Embedding",
+        ourTool: false,
+        qrCode: "Pro feature",
+        qrStuff: "Paid feature",
+        qrCodeGenerator: "Premium feature",
+        theQrCodeGenerator: false,
+        category: "QR Code Features"
+      },
+      // Limitations
+      {
+        feature: "Daily Generation Limit",
+        ourTool: "Unlimited",
+        qrCode: "Unlimited",
+        qrStuff: "5 (Free)",
+        qrCodeGenerator: "10 (Free)",
+        theQrCodeGenerator: "Unlimited",
+        category: "Limitations",
+        highlight: true
       },
       {
-        feature: "Branding",
-        ourTool: "No Watermarks",
-        others: "Branded/Watermarked"
+        feature: "QR Code Expiration",
+        ourTool: "Never expires",
+        qrCode: "Never",
+        qrStuff: "Free codes expire",
+        qrCodeGenerator: "30 days (Free)",
+        theQrCodeGenerator: "Never",
+        category: "Limitations"
+      },
+      {
+        feature: "Dynamic QR Codes",
+        ourTool: false,
+        qrCode: true,
+        qrStuff: "Paid only",
+        qrCodeGenerator: "Premium only",
+        theQrCodeGenerator: false,
+        category: "Limitations"
+      },
+      // Performance
+      {
+        feature: "Generation Speed",
+        ourTool: "Instant",
+        qrCode: "1-2 seconds",
+        qrStuff: "1-3 seconds",
+        qrCodeGenerator: "2-3 seconds",
+        theQrCodeGenerator: "Instant",
+        category: "Performance",
+        highlight: true
+      },
+      {
+        feature: "Bulk Generation",
+        ourTool: "Manual",
+        qrCode: "API only",
+        qrStuff: "Paid feature",
+        qrCodeGenerator: "Premium only",
+        theQrCodeGenerator: false,
+        category: "Performance"
+      },
+      // User Experience
+      {
+        feature: "Registration Required",
+        ourTool: false,
+        qrCode: true,
+        qrStuff: "For downloads",
+        qrCodeGenerator: "For saving",
+        theQrCodeGenerator: false,
+        category: "User Experience"
+      },
+      {
+        feature: "Watermarks",
+        ourTool: "Never",
+        qrCode: "Never",
+        qrStuff: "Free version",
+        qrCodeGenerator: "Free version",
+        theQrCodeGenerator: "Never",
+        category: "User Experience"
+      },
+      {
+        feature: "Ads Display",
+        ourTool: false,
+        qrCode: false,
+        qrStuff: "Free version",
+        qrCodeGenerator: "Free version",
+        theQrCodeGenerator: "Minimal",
+        category: "User Experience"
       }
     ],
     faqs: generateQRGeneratorFAQs(),
@@ -1782,46 +2274,206 @@ export const toolContentData: Record<string, ToolContentData> = {
       }
     ],
     comparisons: [
+      // Privacy & Security
       {
-        feature: "Security Method",
-        ourTool: "Crypto-Secure Random",
-        others: "Pseudo-Random",
+        feature: "Processing Location",
+        ourTool: "100% Browser-based",
+        lastPass: "Server-based",
+        dashlane: "Server-based",
+        keeper: "Server-based",
+        bitwarden: "Local/Server hybrid",
+        category: "Privacy & Security",
         highlight: true
       },
       {
+        feature: "Security Method",
+        ourTool: "Crypto-secure random",
+        lastPass: "Crypto-secure",
+        dashlane: "Crypto-secure",
+        keeper: "Crypto-secure",
+        bitwarden: "Crypto-secure",
+        category: "Privacy & Security"
+      },
+      {
         feature: "Password Storage",
-        ourTool: "Never Stored",
-        others: "Often Logged/Stored"
+        ourTool: "Never stored",
+        lastPass: "Encrypted vault",
+        dashlane: "Encrypted vault",
+        keeper: "Encrypted vault",
+        bitwarden: "Encrypted vault",
+        category: "Privacy & Security",
+        highlight: true
       },
       {
-        feature: "Length Range", 
-        ourTool: "4-128 Characters",
-        others: "Limited Range"
+        feature: "Logging/Analytics",
+        ourTool: "None",
+        lastPass: "Usage tracked",
+        dashlane: "Analytics enabled",
+        keeper: "Basic metrics",
+        bitwarden: "Minimal tracking",
+        category: "Privacy & Security"
+      },
+      // Pricing
+      {
+        feature: "Basic Access",
+        ourTool: "Free",
+        lastPass: "$3/month",
+        dashlane: "$4.99/month",
+        keeper: "$2.92/month",
+        bitwarden: "Free (limited)",
+        category: "Pricing",
+        highlight: true
       },
       {
-        feature: "Character Control",
-        ourTool: "Full Customization",
-        others: "Preset Options"
+        feature: "Premium Features",
+        ourTool: "Free",
+        lastPass: "Included",
+        dashlane: "Included",
+        keeper: "Included",
+        bitwarden: "$10/year",
+        category: "Pricing"
+      },
+      {
+        feature: "Family Plan",
+        ourTool: "Not needed",
+        lastPass: "$4/month",
+        dashlane: "$7.49/month",
+        keeper: "$6.25/month",
+        bitwarden: "$40/year",
+        category: "Pricing"
+      },
+      // Password Generation Features
+      {
+        feature: "Length Range",
+        ourTool: "4-128 chars",
+        lastPass: "5-99 chars",
+        dashlane: "4-40 chars",
+        keeper: "8-100 chars",
+        bitwarden: "5-128 chars",
+        category: "Password Generation Features",
+        highlight: true
+      },
+      {
+        feature: "Character Sets",
+        ourTool: "Full control",
+        lastPass: "Full control",
+        dashlane: "Full control",
+        keeper: "Full control",
+        bitwarden: "Full control",
+        category: "Password Generation Features"
+      },
+      {
+        feature: "Avoid Ambiguous",
+        ourTool: "Manual",
+        lastPass: true,
+        dashlane: true,
+        keeper: true,
+        bitwarden: true,
+        category: "Password Generation Features"
+      },
+      {
+        feature: "Pronounceable",
+        ourTool: false,
+        lastPass: true,
+        dashlane: false,
+        keeper: false,
+        bitwarden: false,
+        category: "Password Generation Features"
+      },
+      {
+        feature: "Passphrase Mode",
+        ourTool: false,
+        lastPass: true,
+        dashlane: true,
+        keeper: true,
+        bitwarden: true,
+        category: "Password Generation Features"
       },
       {
         feature: "Batch Generation",
-        ourTool: "Multiple At Once",
-        others: "One At A Time"
+        ourTool: "Manual multiple",
+        lastPass: "One at a time",
+        dashlane: "One at a time",
+        keeper: "One at a time",
+        bitwarden: "One at a time",
+        category: "Password Generation Features"
+      },
+      // Limitations
+      {
+        feature: "Generation Limit",
+        ourTool: "Unlimited",
+        lastPass: "Unlimited",
+        dashlane: "Unlimited",
+        keeper: "Unlimited",
+        bitwarden: "Unlimited",
+        category: "Limitations",
+        highlight: true
       },
       {
-        feature: "Privacy",
-        ourTool: "100% Local",
-        others: "Server Processing"
+        feature: "Registration Required",
+        ourTool: false,
+        lastPass: true,
+        dashlane: true,
+        keeper: true,
+        bitwarden: "For sync",
+        category: "Limitations"
       },
       {
-        feature: "Cost",
-        ourTool: "Free Forever",
-        others: "Premium Features"
+        feature: "Platform Lock-in",
+        ourTool: "None",
+        lastPass: "Account-based",
+        dashlane: "Account-based",
+        keeper: "Account-based",
+        bitwarden: "Account-based",
+        category: "Limitations"
+      },
+      // Performance
+      {
+        feature: "Generation Speed",
+        ourTool: "Instant",
+        lastPass: "Instant",
+        dashlane: "Instant",
+        keeper: "Instant",
+        bitwarden: "Instant",
+        category: "Performance",
+        highlight: true
       },
       {
-        feature: "Requirements",
-        ourTool: "No Registration",
-        others: "Account Required"
+        feature: "Offline Support",
+        ourTool: true,
+        lastPass: "Limited",
+        dashlane: "Limited",
+        keeper: "Limited",
+        bitwarden: true,
+        category: "Performance"
+      },
+      // User Experience
+      {
+        feature: "Installation Required",
+        ourTool: false,
+        lastPass: "Extension/App",
+        dashlane: "Extension/App",
+        keeper: "Extension/App",
+        bitwarden: "Extension/App",
+        category: "User Experience"
+      },
+      {
+        feature: "Copy to Clipboard",
+        ourTool: true,
+        lastPass: true,
+        dashlane: true,
+        keeper: true,
+        bitwarden: true,
+        category: "User Experience"
+      },
+      {
+        feature: "Password History",
+        ourTool: "Session only",
+        lastPass: "Permanent",
+        dashlane: "Permanent",
+        keeper: "Permanent",
+        bitwarden: "Permanent",
+        category: "User Experience"
       }
     ],
     faqs: [
@@ -1922,6 +2574,645 @@ export const toolContentData: Record<string, ToolContentData> = {
           review: "Great customization options for different password requirements. Works perfectly offline too.",
           author: "Emily Rodriguez",
           date: "Jan 14, 2025"
+        }
+      ]
+    }
+  },
+
+  "extract-text": {
+    trustBadge: "Extract text for 70,000+ users monthly",
+    trustIndicators: [
+      { icon: Shield, text: "100% Private", color: "text-green-500" },
+      { icon: Globe, text: "15+ Languages", color: "text-blue-500" },
+      { icon: Zap, text: "OCR Powered", color: "text-yellow-500" }
+    ],
+    howItWorksSteps: [
+      {
+        number: 1,
+        title: "Upload Image",
+        description: "Select an image file containing text (JPG, PNG, or other formats).",
+        icon: Upload
+      },
+      {
+        number: 2,
+        title: "Select Language",
+        description: "Choose the language of the text in your image for accurate extraction.",
+        icon: Globe
+      },
+      {
+        number: 3,
+        title: "Extract Text",
+        description: "Our OCR engine processes your image and extracts all readable text.",
+        icon: FileText
+      },
+      {
+        number: 4,
+        title: "Copy or Download",
+        description: "Copy the extracted text or download it as a file for your use.",
+        icon: Download
+      }
+    ],
+    processingTime: "10-30 seconds",
+    whyChooseData: {
+      benefits: [
+        "Support for 15+ languages including Asian and Arabic scripts",
+        "High accuracy OCR with confidence scoring",
+        "Process images entirely in your browser for privacy",
+        "Extract from screenshots, photos, scans, and documents",
+        "No file upload required - complete privacy protection",
+        "Works with handwritten text and various fonts"
+      ],
+      features: [
+        {
+          icon: Globe,
+          title: "Multi-Language OCR",
+          description: "15+ languages with native script support",
+          highlight: true
+        },
+        {
+          icon: Shield,
+          title: "Browser-Based OCR",
+          description: "No upload needed, complete privacy"
+        },
+        {
+          icon: CheckCircle,
+          title: "High Accuracy",
+          description: "Advanced OCR with confidence scoring"
+        },
+        {
+          icon: FileText,
+          title: "Any Image Type",
+          description: "JPG, PNG, WebP, BMP, and more"
+        }
+      ]
+    },
+    useCases: [
+      {
+        title: "Document Digitization",
+        description: "Convert scanned documents and old papers into editable digital text.",
+        icon: FileText,
+        example: "Extract text from scanned contracts"
+      },
+      {
+        title: "Screenshot Text",
+        description: "Extract text from screenshots for easy copying and editing.",
+        icon: Camera,
+        example: "Copy text from presentation slides"
+      },
+      {
+        title: "Receipt Processing",
+        description: "Extract data from receipts and invoices for accounting purposes.",
+        icon: CreditCard,
+        example: "Digitize expense receipts for reports"
+      },
+      {
+        title: "Translation Prep",
+        description: "Extract foreign language text from images for translation.",
+        icon: Globe,
+        example: "Extract text from foreign signs or menus"
+      },
+      {
+        title: "Academic Research",
+        description: "Extract citations and references from scanned research papers.",
+        icon: School,
+        example: "Copy quotes from old textbooks"
+      },
+      {
+        title: "Data Entry",
+        description: "Convert printed forms and tables into editable digital format.",
+        icon: BookOpen,
+        example: "Extract data from printed spreadsheets"
+      }
+    ],
+    comparisons: [
+      // Privacy & Security
+      {
+        feature: "Processing Location",
+        ourTool: "100% Browser-based",
+        adobeAcrobat: "Cloud servers",
+        googleDrive: "Cloud servers",
+        onlineOCR: "Server-based",
+        ocrSpace: "API servers",
+        category: "Privacy & Security",
+        highlight: true
+      },
+      {
+        feature: "Data Retention",
+        ourTool: "Never stored",
+        adobeAcrobat: "Temporary storage",
+        googleDrive: "Stored in drive",
+        onlineOCR: "24 hour deletion",
+        ocrSpace: "1 hour deletion",
+        category: "Privacy & Security"
+      },
+      // Pricing
+      {
+        feature: "Basic Access",
+        ourTool: "Free",
+        adobeAcrobat: "$19.99/month",
+        googleDrive: "Free (limited)",
+        onlineOCR: "Free (5 pages)",
+        ocrSpace: "Free (25,000/month)",
+        category: "Pricing",
+        highlight: true
+      },
+      {
+        feature: "Premium Features",
+        ourTool: "Free",
+        adobeAcrobat: "Included",
+        googleDrive: "$1.99/month",
+        onlineOCR: "$4.95/month",
+        ocrSpace: "$10/month",
+        category: "Pricing"
+      },
+      // OCR Features
+      {
+        feature: "Supported Languages",
+        ourTool: "15+ languages",
+        adobeAcrobat: "20+ languages",
+        googleDrive: "100+ languages",
+        onlineOCR: "46 languages",
+        ocrSpace: "20+ languages",
+        category: "OCR Features",
+        highlight: true
+      },
+      {
+        feature: "Image Formats",
+        ourTool: "JPG, PNG, WebP, BMP",
+        adobeAcrobat: "PDF, JPG, PNG",
+        googleDrive: "Most formats",
+        onlineOCR: "JPG, PNG, GIF, PDF",
+        ocrSpace: "JPG, PNG, PDF, WebP",
+        category: "OCR Features"
+      },
+      {
+        feature: "Handwriting Support",
+        ourTool: "Basic",
+        adobeAcrobat: "Limited",
+        googleDrive: "Good",
+        onlineOCR: "No",
+        ocrSpace: "Limited",
+        category: "OCR Features"
+      },
+      {
+        feature: "Confidence Score",
+        ourTool: true,
+        adobeAcrobat: false,
+        googleDrive: false,
+        onlineOCR: false,
+        ocrSpace: false,
+        category: "OCR Features"
+      },
+      // Limitations
+      {
+        feature: "File Size Limit",
+        ourTool: "No limit",
+        adobeAcrobat: "100MB",
+        googleDrive: "2MB",
+        onlineOCR: "15MB",
+        ocrSpace: "1MB (Free)",
+        category: "Limitations",
+        highlight: true
+      },
+      {
+        feature: "Daily Usage Limit",
+        ourTool: "Unlimited",
+        adobeAcrobat: "Unlimited",
+        googleDrive: "10 files (Free)",
+        onlineOCR: "5 pages (Free)",
+        ocrSpace: "500 (Free)",
+        category: "Limitations"
+      },
+      {
+        feature: "Batch Processing",
+        ourTool: "One at a time",
+        adobeAcrobat: "Batch support",
+        googleDrive: "One at a time",
+        onlineOCR: "Batch (Pro)",
+        ocrSpace: "API batch",
+        category: "Limitations"
+      },
+      // Performance
+      {
+        feature: "Processing Speed",
+        ourTool: "10-30 seconds",
+        adobeAcrobat: "20-40 seconds",
+        googleDrive: "5-15 seconds",
+        onlineOCR: "10-30 seconds",
+        ocrSpace: "5-10 seconds",
+        category: "Performance",
+        highlight: true
+      },
+      {
+        feature: "Offline Support",
+        ourTool: "After loading",
+        adobeAcrobat: false,
+        googleDrive: false,
+        onlineOCR: false,
+        ocrSpace: false,
+        category: "Performance"
+      },
+      // User Experience
+      {
+        feature: "Registration Required",
+        ourTool: false,
+        adobeAcrobat: true,
+        googleDrive: true,
+        onlineOCR: "For download",
+        ocrSpace: "For API",
+        category: "User Experience"
+      },
+      {
+        feature: "Output Formats",
+        ourTool: "Text, Copy",
+        adobeAcrobat: "PDF, Word, Text",
+        googleDrive: "Google Docs",
+        onlineOCR: "Word, Excel, Text",
+        ocrSpace: "JSON, Text",
+        category: "User Experience"
+      }
+    ],
+    faqs: [
+      {
+        question: "What languages are supported for text extraction?",
+        answer: "We support 15+ languages including English, Spanish, French, German, Italian, Portuguese, Russian, Japanese, Chinese (Simplified & Traditional), Korean, Arabic, Hindi, Dutch, and Polish.",
+        category: "Features"
+      },
+      {
+        question: "Can it extract text from handwritten notes?",
+        answer: "Yes, our OCR can handle basic handwritten text, though accuracy is best with clear, printed handwriting. Cursive and stylized handwriting may have lower accuracy.",
+        category: "Features"
+      },
+      {
+        question: "What image formats are supported?",
+        answer: "We support all major image formats including JPG, PNG, WebP, BMP, GIF, and TIFF. The tool works with screenshots, photos, and scanned documents.",
+        category: "Technical"
+      },
+      {
+        question: "How accurate is the text extraction?",
+        answer: "Accuracy typically ranges from 90-99% for clear, printed text. We provide a confidence score to indicate extraction quality. Factors affecting accuracy include image quality, font clarity, and language complexity.",
+        category: "Quality"
+      },
+      {
+        question: "Is my image data kept private?",
+        answer: "Absolutely! All OCR processing happens directly in your browser. Your images are never uploaded to our servers, ensuring complete privacy and data security.",
+        category: "Security"
+      }
+    ],
+    ratings: {
+      value: 4.5,
+      count: 892,
+      reviews: [
+        {
+          rating: 5,
+          review: "Perfect for extracting text from screenshots! Browser-based processing means my data stays private.",
+          author: "Michael Chen",
+          date: "Jan 18, 2025"
+        },
+        {
+          rating: 4,
+          review: "Great multi-language support. Extracted Japanese text perfectly from my documents.",
+          author: "Yuki Tanaka",
+          date: "Jan 16, 2025"
+        },
+        {
+          rating: 5,
+          review: "Fast and accurate. Love the confidence scoring feature to know extraction quality.",
+          author: "Sarah Wilson",
+          date: "Jan 14, 2025"
+        }
+      ]
+    }
+  },
+
+  "rotate-pdf": {
+    trustBadge: "Rotate PDFs for 85,000+ users monthly",
+    trustIndicators: [
+      { icon: Shield, text: "100% Private", color: "text-green-500" },
+      { icon: RotateCw, text: "Any Angle", color: "text-blue-500" },
+      { icon: Zap, text: "Instant Rotate", color: "text-yellow-500" }
+    ],
+    howItWorksSteps: [
+      {
+        number: 1,
+        title: "Upload PDF",
+        description: "Select the PDF file you want to rotate from your device.",
+        icon: Upload
+      },
+      {
+        number: 2,
+        title: "Select Pages",
+        description: "Choose which pages to rotate - all pages or specific selections.",
+        icon: FileText
+      },
+      {
+        number: 3,
+        title: "Choose Rotation",
+        description: "Rotate 90°, 180°, or 270° clockwise with preview.",
+        icon: RotateCw
+      },
+      {
+        number: 4,
+        title: "Download Result",
+        description: "Get your perfectly rotated PDF with original quality preserved.",
+        icon: Download
+      }
+    ],
+    processingTime: "2-5 seconds",
+    whyChooseData: {
+      benefits: [
+        "Rotate individual pages or entire documents as needed",
+        "Multiple rotation angles: 90°, 180°, 270° clockwise",
+        "Preserve original PDF quality and formatting perfectly",
+        "Page preview to verify rotation before processing",
+        "No file size limits or usage restrictions",
+        "Batch rotation for multiple pages simultaneously"
+      ],
+      features: [
+        {
+          icon: RotateCw,
+          title: "Flexible Rotation",
+          description: "Any angle, any page combination",
+          highlight: true
+        },
+        {
+          icon: Shield,
+          title: "100% Private",
+          description: "All rotation happens in your browser"
+        },
+        {
+          icon: CheckCircle,
+          title: "Quality Preserved",
+          description: "No compression or quality loss"
+        },
+        {
+          icon: Zap,
+          title: "Instant Results",
+          description: "Rotate PDFs in seconds"
+        }
+      ]
+    },
+    useCases: [
+      {
+        title: "Scanned Documents",
+        description: "Fix incorrectly oriented scanned pages from scanners or mobile apps.",
+        icon: FileText,
+        example: "Correct sideways scanned contracts"
+      },
+      {
+        title: "Mixed Orientations",
+        description: "Fix PDFs with pages in different orientations for consistent viewing.",
+        icon: RefreshCw,
+        example: "Standardize report page orientations"
+      },
+      {
+        title: "Landscape Tables",
+        description: "Rotate wide tables and charts for better readability.",
+        icon: BookOpen,
+        example: "Fix rotated spreadsheet exports"
+      },
+      {
+        title: "Mobile Photos",
+        description: "Correct orientation of PDFs created from phone photos.",
+        icon: Camera,
+        example: "Fix upside-down receipt photos"
+      },
+      {
+        title: "Presentation Fix",
+        description: "Correct slide orientations before presenting or sharing.",
+        icon: Share2,
+        example: "Fix rotated presentation slides"
+      },
+      {
+        title: "Archive Cleanup",
+        description: "Standardize orientation in document archives and collections.",
+        icon: Server,
+        example: "Clean up legacy document archives"
+      }
+    ],
+    comparisons: [
+      // Privacy & Security
+      {
+        feature: "Processing Location",
+        ourTool: "100% Browser-based",
+        adobeAcrobat: "Cloud servers",
+        smallPDF: "Cloud servers",
+        iLovePDF: "Cloud servers",
+        pdf24: "Cloud/Desktop",
+        category: "Privacy & Security",
+        highlight: true
+      },
+      {
+        feature: "Data Retention",
+        ourTool: "Never stored",
+        adobeAcrobat: "Temporary storage",
+        smallPDF: "1 hour deletion",
+        iLovePDF: "2 hour deletion",
+        pdf24: "24 hour deletion",
+        category: "Privacy & Security"
+      },
+      // Pricing
+      {
+        feature: "Basic Access",
+        ourTool: "Free",
+        adobeAcrobat: "$19.99/month",
+        smallPDF: "Free (2/day)",
+        iLovePDF: "Free (limited)",
+        pdf24: "Free",
+        category: "Pricing",
+        highlight: true
+      },
+      {
+        feature: "Premium Features",
+        ourTool: "Free",
+        adobeAcrobat: "Included",
+        smallPDF: "$12/month",
+        iLovePDF: "$7/month",
+        pdf24: "Free",
+        category: "Pricing"
+      },
+      {
+        feature: "Watermarks",
+        ourTool: "Never",
+        adobeAcrobat: "Never",
+        smallPDF: "Free version",
+        iLovePDF: "Some features",
+        pdf24: "Never",
+        category: "Pricing"
+      },
+      // Rotation Features
+      {
+        feature: "Rotation Angles",
+        ourTool: "90°, 180°, 270°",
+        adobeAcrobat: "Any angle",
+        smallPDF: "90° increments",
+        iLovePDF: "90° increments",
+        pdf24: "90° increments",
+        category: "Rotation Features"
+      },
+      {
+        feature: "Page Selection",
+        ourTool: "Individual/All",
+        adobeAcrobat: "Any selection",
+        smallPDF: "All or range",
+        iLovePDF: "All or range",
+        pdf24: "Individual/All",
+        category: "Rotation Features",
+        highlight: true
+      },
+      {
+        feature: "Preview Before Save",
+        ourTool: true,
+        adobeAcrobat: true,
+        smallPDF: "Pro only",
+        iLovePDF: "Premium only",
+        pdf24: true,
+        category: "Rotation Features"
+      },
+      {
+        feature: "Batch Rotation",
+        ourTool: true,
+        adobeAcrobat: true,
+        smallPDF: "Pro only",
+        iLovePDF: "Premium only",
+        pdf24: true,
+        category: "Rotation Features"
+      },
+      // Limitations
+      {
+        feature: "File Size Limit",
+        ourTool: "No limit",
+        adobeAcrobat: "100MB",
+        smallPDF: "5GB (Pro)",
+        iLovePDF: "200MB",
+        pdf24: "100MB",
+        category: "Limitations",
+        highlight: true
+      },
+      {
+        feature: "Daily Usage Limit",
+        ourTool: "Unlimited",
+        adobeAcrobat: "Unlimited",
+        smallPDF: "2 files (Free)",
+        iLovePDF: "1 per hour",
+        pdf24: "Unlimited",
+        category: "Limitations"
+      },
+      {
+        feature: "Page Count Limit",
+        ourTool: "Unlimited",
+        adobeAcrobat: "Unlimited",
+        smallPDF: "5000 pages",
+        iLovePDF: "1000 pages",
+        pdf24: "500 pages",
+        category: "Limitations"
+      },
+      // Performance
+      {
+        feature: "Processing Speed",
+        ourTool: "2-5 seconds",
+        adobeAcrobat: "10-20 seconds",
+        smallPDF: "5-15 seconds",
+        iLovePDF: "5-10 seconds",
+        pdf24: "10-15 seconds",
+        category: "Performance",
+        highlight: true
+      },
+      {
+        feature: "Quality Preserved",
+        ourTool: "100%",
+        adobeAcrobat: "100%",
+        smallPDF: "100%",
+        iLovePDF: "100%",
+        pdf24: "100%",
+        category: "Performance"
+      },
+      {
+        feature: "Offline Support",
+        ourTool: true,
+        adobeAcrobat: false,
+        smallPDF: false,
+        iLovePDF: false,
+        pdf24: "Desktop only",
+        category: "Performance"
+      },
+      // User Experience
+      {
+        feature: "Registration Required",
+        ourTool: false,
+        adobeAcrobat: true,
+        smallPDF: "For Pro",
+        iLovePDF: "For Premium",
+        pdf24: false,
+        category: "User Experience"
+      },
+      {
+        feature: "Email Required",
+        ourTool: false,
+        adobeAcrobat: true,
+        smallPDF: "For download",
+        iLovePDF: "Optional",
+        pdf24: false,
+        category: "User Experience"
+      },
+      {
+        feature: "Ads Display",
+        ourTool: false,
+        adobeAcrobat: false,
+        smallPDF: "Free version",
+        iLovePDF: "Free version",
+        pdf24: "Minimal",
+        category: "User Experience"
+      }
+    ],
+    faqs: [
+      {
+        question: "Can I rotate individual pages differently?",
+        answer: "Yes! You can select specific pages and rotate them independently. For example, rotate pages 1-3 by 90° and pages 5-7 by 180° in the same operation.",
+        category: "Features"
+      },
+      {
+        question: "Will rotating affect the PDF quality?",
+        answer: "No, rotation preserves 100% of the original quality. Text remains searchable, images stay crisp, and all formatting is maintained perfectly.",
+        category: "Quality"
+      },
+      {
+        question: "Can I preview before saving?",
+        answer: "Yes, you can see a preview of how pages will look after rotation before processing, ensuring you get the exact orientation you need.",
+        category: "Features"
+      },
+      {
+        question: "What rotation angles are available?",
+        answer: "You can rotate pages 90°, 180°, or 270° clockwise. This covers all standard rotation needs for fixing document orientation.",
+        category: "Features"
+      },
+      {
+        question: "Is there a limit on file size or page count?",
+        answer: "No limits! You can rotate PDFs of any size with any number of pages. The only constraint is your device's available memory.",
+        category: "Limitations"
+      }
+    ],
+    ratings: {
+      value: 4.7,
+      count: 1043,
+      reviews: [
+        {
+          rating: 5,
+          review: "Perfect for fixing scanned documents! Fast and preserves quality perfectly.",
+          author: "Robert Johnson",
+          date: "Jan 19, 2025"
+        },
+        {
+          rating: 5,
+          review: "Love the page selection feature. Can rotate specific pages without affecting others.",
+          author: "Emma Davis",
+          date: "Jan 17, 2025"
+        },
+        {
+          rating: 4,
+          review: "Simple and effective. No registration needed and works completely offline.",
+          author: "James Miller",
+          date: "Jan 15, 2025"
         }
       ]
     }

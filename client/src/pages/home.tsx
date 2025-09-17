@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -9,7 +9,7 @@ import {
   FileText, Lock, Image, Shield, Zap, Check, ArrowRight, 
   Search, Star, Users, Globe, Download, TrendingUp,
   Clock, ChevronRight, Sparkles, QrCode, Calculator,
-  BookOpen, FileCode, Type, PenTool, Book
+  BookOpen, FileCode, Type, PenTool, Book, X
 } from "lucide-react";
 import { useSEO, generateOrganizationSchema, generateWebApplicationSchema, generateFAQSchema, generateServiceSchema } from "@/hooks/use-seo";
 import { motion, AnimatePresence } from "framer-motion";
@@ -24,6 +24,9 @@ import {
   Tool 
 } from "@/lib/tools-data";
 import { cn } from "@/lib/utils";
+import { platformComparison } from "@/lib/tool-content-data";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { RotateCw } from "lucide-react";
 
 const features = [
   {
@@ -1000,6 +1003,233 @@ export default function Home() {
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Platform Comparison Section */}
+      <section className="py-20 bg-gradient-to-br from-background via-muted/30 to-background">
+        <div className="container mx-auto px-4 max-w-7xl">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-12"
+          >
+            <Badge className="mb-4" variant="outline">
+              <TrendingUp className="mr-1 h-3 w-3" />
+              Platform Comparison
+            </Badge>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              Why Choose <span className="bg-gradient-to-r from-primary via-purple-500 to-primary bg-clip-text text-transparent">AltafToolsHub</span>?
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              See how we compare to other popular platforms. More tools, better privacy, zero cost.
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="bg-card rounded-xl border shadow-xl overflow-hidden"
+          >
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow className="bg-muted/50">
+                    <TableHead className="w-[200px] font-bold">Feature</TableHead>
+                    <TableHead className="text-center">
+                      <div className="flex flex-col items-center gap-1">
+                        <LogoIcon className="h-6 w-6 text-primary" />
+                        <span className="font-bold text-primary">AltafToolsHub</span>
+                      </div>
+                    </TableHead>
+                    <TableHead className="text-center">
+                      <div className="text-sm">Adobe Acrobat</div>
+                    </TableHead>
+                    <TableHead className="text-center">
+                      <div className="text-sm">SmallPDF</div>
+                    </TableHead>
+                    <TableHead className="text-center">
+                      <div className="text-sm">iLovePDF</div>
+                    </TableHead>
+                    <TableHead className="text-center">
+                      <div className="text-sm">PDF24</div>
+                    </TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {Object.entries(
+                    platformComparison.reduce((acc, item) => {
+                      if (!acc[item.category]) {
+                        acc[item.category] = [];
+                      }
+                      acc[item.category].push(item);
+                      return acc;
+                    }, {} as Record<string, typeof platformComparison>)
+                  ).map(([category, items]) => (
+                    <React.Fragment key={category}>
+                      <TableRow className="bg-muted/30">
+                        <TableCell colSpan={6} className="font-semibold text-sm">
+                          {category}
+                        </TableCell>
+                      </TableRow>
+                      {items.map((item, idx) => (
+                        <TableRow 
+                          key={`${category}-${idx}`}
+                          className={cn(
+                            item.highlight && "bg-primary/5 font-medium",
+                            "hover:bg-muted/50 transition-colors"
+                          )}
+                        >
+                          <TableCell className="font-medium">
+                            {item.feature}
+                            {item.highlight && (
+                              <Badge className="ml-2 text-xs" variant="default">
+                                Best
+                              </Badge>
+                            )}
+                          </TableCell>
+                          <TableCell className="text-center">
+                            {typeof item.altafToolsHub === 'boolean' ? (
+                              item.altafToolsHub ? (
+                                <Check className="h-5 w-5 text-green-500 mx-auto" />
+                              ) : (
+                                <X className="h-5 w-5 text-muted-foreground/50 mx-auto" />
+                              )
+                            ) : (
+                              <span className={cn(
+                                item.altafToolsHub === "$0" && "text-green-600 font-bold",
+                                item.altafToolsHub === "Free" && "text-green-600 font-bold",
+                                item.altafToolsHub === "Unlimited" && "text-green-600 font-bold",
+                                item.altafToolsHub === "No limit" && "text-green-600 font-bold",
+                                item.altafToolsHub === "Never" && "text-green-600 font-bold",
+                                item.altafToolsHub === "<1 second" && "text-green-600 font-bold",
+                                item.altafToolsHub === "100% Client-Side Processing" && "text-green-600 font-bold"
+                              )}>
+                                {item.altafToolsHub}
+                              </span>
+                            )}
+                          </TableCell>
+                          <TableCell className="text-center text-sm">
+                            {typeof item.adobeAcrobat === 'boolean' ? (
+                              item.adobeAcrobat ? (
+                                <Check className="h-4 w-4 text-green-500 mx-auto" />
+                              ) : (
+                                <X className="h-4 w-4 text-muted-foreground/50 mx-auto" />
+                              )
+                            ) : (
+                              <span className={cn(
+                                item.adobeAcrobat?.includes("$") && "text-orange-600"
+                              )}>
+                                {item.adobeAcrobat}
+                              </span>
+                            )}
+                          </TableCell>
+                          <TableCell className="text-center text-sm">
+                            {typeof item.smallPDF === 'boolean' ? (
+                              item.smallPDF ? (
+                                <Check className="h-4 w-4 text-green-500 mx-auto" />
+                              ) : (
+                                <X className="h-4 w-4 text-muted-foreground/50 mx-auto" />
+                              )
+                            ) : (
+                              <span className={cn(
+                                item.smallPDF?.includes("$") && "text-orange-600",
+                                item.smallPDF?.includes("limited") && "text-amber-600"
+                              )}>
+                                {item.smallPDF}
+                              </span>
+                            )}
+                          </TableCell>
+                          <TableCell className="text-center text-sm">
+                            {typeof item.iLovePDF === 'boolean' ? (
+                              item.iLovePDF ? (
+                                <Check className="h-4 w-4 text-green-500 mx-auto" />
+                              ) : (
+                                <X className="h-4 w-4 text-muted-foreground/50 mx-auto" />
+                              )
+                            ) : (
+                              <span className={cn(
+                                item.iLovePDF?.includes("$") && "text-orange-600",
+                                item.iLovePDF?.includes("limited") && "text-amber-600"
+                              )}>
+                                {item.iLovePDF}
+                              </span>
+                            )}
+                          </TableCell>
+                          <TableCell className="text-center text-sm">
+                            {typeof item.pdf24 === 'boolean' ? (
+                              item.pdf24 ? (
+                                <Check className="h-4 w-4 text-green-500 mx-auto" />
+                              ) : (
+                                <X className="h-4 w-4 text-muted-foreground/50 mx-auto" />
+                              )
+                            ) : (
+                              <span className={cn(
+                                item.pdf24?.includes("$") && "text-orange-600"
+                              )}>
+                                {item.pdf24}
+                              </span>
+                            )}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </React.Fragment>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+            
+            {/* Comparison Summary */}
+            <div className="p-6 bg-gradient-to-r from-primary/10 via-purple-500/10 to-primary/10 border-t">
+              <div className="grid md:grid-cols-4 gap-4 text-center">
+                <div>
+                  <div className="text-3xl font-bold text-primary mb-1">100%</div>
+                  <div className="text-sm text-muted-foreground">Privacy Guaranteed</div>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-green-600 mb-1">$0</div>
+                  <div className="text-sm text-muted-foreground">Forever Free</div>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-blue-600 mb-1">60+</div>
+                  <div className="text-sm text-muted-foreground">Total Tools</div>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-purple-600 mb-1">No Limits</div>
+                  <div className="text-sm text-muted-foreground">Unlimited Usage</div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Call to Action */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="text-center mt-12"
+          >
+            <p className="text-lg text-muted-foreground mb-6">
+              Experience the difference with browser-based processing and complete privacy
+            </p>
+            <div className="flex gap-4 justify-center">
+              <Link href="/all-tools">
+                <Button size="lg" className="gap-2">
+                  <Zap className="h-5 w-5" />
+                  Try Any Tool Free
+                </Button>
+              </Link>
+              <Button size="lg" variant="outline" className="gap-2">
+                <Shield className="h-5 w-5" />
+                Learn About Privacy
+              </Button>
+            </div>
+          </motion.div>
         </div>
       </section>
 
