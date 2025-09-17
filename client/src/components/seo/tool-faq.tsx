@@ -194,7 +194,7 @@ export function generatePDFCompressFAQs(): FAQ[] {
   return [
     {
       question: "How does PDF compression work without losing quality?",
-      answer: "Our PDF compressor uses intelligent algorithms to reduce file size by optimizing images, removing redundant data, and streamlining the PDF structure. We carefully balance compression to maintain readability while achieving your target file size.",
+      answer: "Our PDF compressor uses advanced algorithms to reduce file size by optimizing images, removing redundant data, and streamlining the PDF structure. We carefully balance compression to maintain readability while achieving your target file size.",
       category: "How It Works"
     },
     {
@@ -249,7 +249,7 @@ export function generatePDFCompressFAQs(): FAQ[] {
     },
     {
       question: "What happens to image quality during compression?",
-      answer: "Images are intelligently compressed using advanced algorithms. Higher compression levels reduce image resolution more aggressively, but we optimize to maintain text clarity and essential visual details.",
+      answer: "Images are automatically compressed using advanced algorithms. Higher compression levels reduce image resolution more aggressively, but we optimize to maintain text clarity and essential visual details.",
       category: "Quality"
     },
     {

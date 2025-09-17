@@ -1,4 +1,4 @@
-// Smart File Namer - AI-powered file naming suggestions
+// Smart File Namer - Browser-based file naming suggestions
 // Generates descriptive file names based on content, operation, and date
 
 interface FileNameOptions {

@@ -91,7 +91,7 @@ export default function CompressPDF() {
     title: "Compress PDF Online Free - Reduce PDF Size to 10KB-5MB | AltafToolsHub",
     description: "Free online PDF compressor to reduce file size to specific targets (10KB to 5MB). Smart compression preserves quality. 100% client-side processing ensures complete privacy.",
     path: "/compress-pdf",
-    keywords: "compress pdf, reduce pdf size, pdf compressor online, compress pdf to 100kb, compress pdf to 50kb, pdf size reducer, online pdf compression, free pdf compressor, compress pdf 2025, ai pdf compression",
+    keywords: "compress pdf, reduce pdf size, pdf compressor online, compress pdf to 100kb, compress pdf to 50kb, pdf size reducer, online pdf compression, free pdf compressor, compress pdf 2025",
     ogImage: "https://www.altaftoolshub.com/og-compress-pdf.png",
     structuredData: [howToSchema, softwareSchema],
     additionalMetaTags: [
@@ -576,7 +576,7 @@ export default function CompressPDF() {
         <div className="container mx-auto px-4 py-8 max-w-4xl">
           <div className="text-center mb-8">
             <h1 className="text-3xl sm:text-4xl font-bold mb-4 gradient-text">Smart PDF Compressor</h1>
-            <p className="text-lg text-muted-foreground">Intelligently optimizing your PDF...</p>
+            <p className="text-lg text-muted-foreground">Automatically optimizing your PDF...</p>
           </div>
 
           <Card className="glass p-12 text-center">
@@ -628,7 +628,7 @@ export default function CompressPDF() {
           </Button>
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary mb-6">
             <Sparkles className="w-4 h-4" />
-            <span className="text-sm font-medium">AI-Powered Compression</span>
+            <span className="text-sm font-medium">Browser-Based Compression</span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
             Smart PDF <span className="gradient-text">Compressor</span>
@@ -882,7 +882,7 @@ export default function CompressPDF() {
                 <Alert className="mb-6 border-primary/20 bg-primary/5">
                   <Info className="h-4 w-4" />
                   <AlertDescription>
-                    Using <strong>{compressionMode === 'highest' ? 'HIGHEST QUALITY' : compressionMode.toUpperCase()}</strong> mode: The compressor will intelligently adjust quality to reach {targetSizeOptions.find(o => o.value === targetSize)?.label} while {compressionMode === 'highest' ? 'preserving maximum clarity and text sharpness with the best possible quality' : compressionMode === 'fast' ? 'prioritizing speed' : 'balancing quality and size'}.
+                    Using <strong>{compressionMode === 'highest' ? 'HIGHEST QUALITY' : compressionMode.toUpperCase()}</strong> mode: The compressor will automatically adjust quality to reach {targetSizeOptions.find(o => o.value === targetSize)?.label} while {compressionMode === 'highest' ? 'preserving maximum clarity and text sharpness with the best possible quality' : compressionMode === 'fast' ? 'prioritizing speed' : 'balancing quality and size'}.
                   </AlertDescription>
                 </Alert>
               )}
@@ -931,7 +931,7 @@ export default function CompressPDF() {
           {
             number: 3,
             title: "Download Compressed PDF",
-            description: "Get your optimized PDF instantly. Quality is optimized intelligently for your target size.",
+            description: "Get your optimized PDF instantly. Quality is optimized automatically for your target size.",
             icon: FileDownIcon
           }
         ]}
@@ -941,7 +941,7 @@ export default function CompressPDF() {
         toolName="PDF Compressor"
         benefits={[
           "Reduce PDF files to specific target sizes from 10KB to 5MB",
-          "Smart AI-powered compression optimizes image quality and readability",
+          "Smart browser-based compression optimizes image quality and readability",
           "Files never leave your device - 100% browser-based processing",
           "No registration, watermarks, or file limits",
           "Works offline once the page is loaded",

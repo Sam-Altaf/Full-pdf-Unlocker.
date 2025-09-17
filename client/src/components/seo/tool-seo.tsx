@@ -69,7 +69,7 @@ export const toolFAQs = {
     },
     {
       question: "Can I compress PDF to a specific size?",
-      answer: "Yes! You can choose target sizes from 10KB to 5MB. Our intelligent algorithm adjusts compression parameters to achieve your desired file size while preserving maximum quality."
+      answer: "Yes! You can choose target sizes from 10KB to 5MB. Our advanced algorithm adjusts compression parameters to achieve your desired file size while preserving maximum quality."
     },
     {
       question: "Is my PDF file secure during compression?",
