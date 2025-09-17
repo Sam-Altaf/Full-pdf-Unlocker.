@@ -477,10 +477,10 @@
 }
 
 /* Fixed Navigation z-index - Ensure dropdowns appear above everything */
-header {
+.site-header {
   position: sticky !important;
   top: 0;
-  z-index: 10000 !important; /* High z-index for header but not maximum (dropdown needs to be above) */
+  z-index: 10000 !important; /* High z-index for navigation but not maximum (dropdown needs to be above) */
   isolation: isolate !important; /* Create new stacking context */
 }
 

@@ -24,7 +24,7 @@ interface CompressionParams {
   jpegQuality: number;
   scale: number;
   onProgress?: (progress: number, message: string) => void;
-  mode?: 'highest' | 'balanced' | 'fast' | 'custom' | 'hd'; // 'hd' for compatibility
+  mode?: 'highest' | 'balanced' | 'fast' | 'hd'; // 'hd' for compatibility
   preserveText?: boolean;
 }
 

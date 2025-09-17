@@ -45,7 +45,7 @@ export default function Header() {
   return (
     <motion.header 
       className={cn(
-        "sticky top-0 w-full max-w-full transition-all duration-300",
+        "site-header sticky top-0 w-full max-w-full transition-all duration-300",
         isScrolled 
           ? "bg-background/80 backdrop-blur-lg border-b shadow-sm" 
           : "bg-background border-b"

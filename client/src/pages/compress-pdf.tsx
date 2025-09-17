@@ -37,7 +37,7 @@ interface CompressionParams {
   jpegQuality: number;
   scale: number;
   onProgress?: (progress: number, message: string) => void;
-  mode?: 'highest' | 'hd' | 'balanced' | 'fast' | 'custom';
+  mode?: 'highest' | 'hd' | 'balanced' | 'fast';
 }
 
 // Tool Component - Core functionality only
@@ -214,11 +214,7 @@ function CompressPDFTool() {
       size: result.compressedSize
     });
     
-    const enhancedName = enhanceDownloadName(smartName.suggested, {
-      compressionRatio: result.savings,
-      targetSize: targetSize,
-      quality: result.mode || 'compressed'
-    });
+    const enhancedName = enhanceDownloadName(smartName.suggested, result.compressedBlob);
 
     const url = URL.createObjectURL(result.compressedBlob);
     const a = document.createElement('a');
