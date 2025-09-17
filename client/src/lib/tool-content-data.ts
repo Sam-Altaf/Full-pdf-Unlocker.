@@ -166,46 +166,187 @@ export const toolContentData: Record<string, ToolContentData> = {
       }
     ],
     comparisons: [
+      // Privacy & Security
       {
-        feature: "Privacy Protection",
-        ourTool: "100% Local Processing",
-        others: "Upload to Servers",
+        feature: "File Processing Location",
+        ourTool: "100% Browser-based",
+        adobeAcrobat: "Cloud servers",
+        smallPDF: "Cloud servers",
+        iLovePDF: "Cloud servers",
+        pdf24: "Cloud servers",
+        category: "Privacy & Security",
         highlight: true
       },
       {
-        feature: "File Size Limits",
-        ourTool: "No Limits",
-        others: "20MB - 50MB Max"
+        feature: "Data Storage",
+        ourTool: "Never stored",
+        adobeAcrobat: "Temporary storage",
+        smallPDF: "1 hour retention",
+        iLovePDF: "2 hour retention",
+        pdf24: "24 hour retention",
+        category: "Privacy & Security"
       },
       {
-        feature: "Processing Speed",
-        ourTool: "Instant (No Upload)",
-        others: "Slow (Upload + Process)"
+        feature: "SSL Encryption",
+        ourTool: "Not needed (local)",
+        adobeAcrobat: true,
+        smallPDF: true,
+        iLovePDF: true,
+        pdf24: true,
+        category: "Privacy & Security"
+      },
+      // Pricing
+      {
+        feature: "Basic Access",
+        ourTool: "Free",
+        adobeAcrobat: "$19.99/month",
+        smallPDF: "Free (2/day)",
+        iLovePDF: "Free (limited)",
+        pdf24: "Free",
+        category: "Pricing",
+        highlight: true
       },
       {
-        feature: "Cost",
-        ourTool: "Free Forever",
-        others: "Free with Ads/Limits"
-      },
-      {
-        feature: "Split Methods",
-        ourTool: "3 Methods + Custom",
-        others: "Limited Options"
-      },
-      {
-        feature: "Batch Download",
-        ourTool: true,
-        others: "One by One"
+        feature: "Premium Features",
+        ourTool: "Free",
+        adobeAcrobat: "Included",
+        smallPDF: "$12/month",
+        iLovePDF: "$7/month",
+        pdf24: "Free",
+        category: "Pricing"
       },
       {
         feature: "Watermarks",
-        ourTool: false,
-        others: true
+        ourTool: "Never",
+        adobeAcrobat: "Never",
+        smallPDF: "Free version",
+        iLovePDF: "Free version",
+        pdf24: "Never",
+        category: "Pricing"
       },
+      // Features
+      {
+        feature: "Split by Custom Range",
+        ourTool: true,
+        adobeAcrobat: true,
+        smallPDF: true,
+        iLovePDF: true,
+        pdf24: true,
+        category: "Split Features"
+      },
+      {
+        feature: "Split by Single Pages",
+        ourTool: true,
+        adobeAcrobat: true,
+        smallPDF: true,
+        iLovePDF: true,
+        pdf24: true,
+        category: "Split Features"
+      },
+      {
+        feature: "Split by Fixed Size",
+        ourTool: true,
+        adobeAcrobat: true,
+        smallPDF: false,
+        iLovePDF: true,
+        pdf24: false,
+        category: "Split Features"
+      },
+      {
+        feature: "Batch Download All",
+        ourTool: true,
+        adobeAcrobat: true,
+        smallPDF: "Pro only",
+        iLovePDF: "Premium only",
+        pdf24: true,
+        category: "Split Features",
+        highlight: true
+      },
+      // Limitations
+      {
+        feature: "File Size Limit",
+        ourTool: "No limit",
+        adobeAcrobat: "100MB",
+        smallPDF: "5GB (Pro)",
+        iLovePDF: "500MB",
+        pdf24: "100MB",
+        category: "Limitations",
+        highlight: true
+      },
+      {
+        feature: "Daily Usage Limit",
+        ourTool: "Unlimited",
+        adobeAcrobat: "Unlimited",
+        smallPDF: "2 files (Free)",
+        iLovePDF: "1 file/hour",
+        pdf24: "Unlimited",
+        category: "Limitations"
+      },
+      {
+        feature: "Max Pages per PDF",
+        ourTool: "Unlimited",
+        adobeAcrobat: "Unlimited",
+        smallPDF: "5000 pages",
+        iLovePDF: "1000 pages",
+        pdf24: "500 pages",
+        category: "Limitations"
+      },
+      // Performance
+      {
+        feature: "Processing Speed",
+        ourTool: "Instant",
+        adobeAcrobat: "10-30 seconds",
+        smallPDF: "5-20 seconds",
+        iLovePDF: "5-15 seconds",
+        pdf24: "10-20 seconds",
+        category: "Performance",
+        highlight: true
+      },
+      {
+        feature: "Upload Required",
+        ourTool: false,
+        adobeAcrobat: true,
+        smallPDF: true,
+        iLovePDF: true,
+        pdf24: true,
+        category: "Performance"
+      },
+      {
+        feature: "Offline Support",
+        ourTool: true,
+        adobeAcrobat: false,
+        smallPDF: false,
+        iLovePDF: false,
+        pdf24: false,
+        category: "Performance"
+      },
+      // User Experience
       {
         feature: "Registration Required",
         ourTool: false,
-        others: "Often Required"
+        adobeAcrobat: true,
+        smallPDF: "For Pro",
+        iLovePDF: "For Premium",
+        pdf24: false,
+        category: "User Experience"
+      },
+      {
+        feature: "Email Required",
+        ourTool: false,
+        adobeAcrobat: true,
+        smallPDF: "For download",
+        iLovePDF: "Optional",
+        pdf24: false,
+        category: "User Experience"
+      },
+      {
+        feature: "Ads Display",
+        ourTool: false,
+        adobeAcrobat: false,
+        smallPDF: "Free version",
+        iLovePDF: "Free version",
+        pdf24: "Minimal",
+        category: "User Experience"
       }
     ],
     faqs: [
@@ -417,46 +558,178 @@ export const toolContentData: Record<string, ToolContentData> = {
       }
     ],
     comparisons: [
+      // Privacy & Security
       {
-        feature: "Target Size Selection",
-        ourTool: "Exact Sizes (10KB-5MB)",
-        others: "Generic Quality Levels",
+        feature: "File Processing Location",
+        ourTool: "100% Browser-based",
+        adobeAcrobat: "Cloud servers",
+        smallPDF: "Cloud servers",
+        iLovePDF: "Cloud servers",
+        pdf24: "Cloud/Desktop",
+        category: "Privacy & Security",
         highlight: true
       },
       {
-        feature: "Privacy Protection", 
-        ourTool: "100% Local Processing",
-        others: "Upload to Servers"
+        feature: "Data Retention Policy",
+        ourTool: "Never stored",
+        adobeAcrobat: "Temporary storage",
+        smallPDF: "1 hour deletion",
+        iLovePDF: "2 hour deletion",
+        pdf24: "24 hour deletion",
+        category: "Privacy & Security"
+      },
+      // Pricing
+      {
+        feature: "Basic Access",
+        ourTool: "Free",
+        adobeAcrobat: "$19.99/month",
+        smallPDF: "Free (2/day)",
+        iLovePDF: "Free (limited)",
+        pdf24: "Free",
+        category: "Pricing",
+        highlight: true
       },
       {
-        feature: "Text Quality",
-        ourTool: "Smart Preservation", 
-        others: "Often Degraded"
-      },
-      {
-        feature: "Processing Speed",
-        ourTool: "Instant (No Upload)",
-        others: "Slow Upload/Download"
-      },
-      {
-        feature: "File Size Limits",
-        ourTool: "200MB+",
-        others: "10-50MB Max"
-      },
-      {
-        feature: "Batch Processing",
-        ourTool: "Sequential Processing",
-        others: "Limited or Premium"
+        feature: "Premium Features",
+        ourTool: "Free",
+        adobeAcrobat: "Included",
+        smallPDF: "$12/month",
+        iLovePDF: "$7/month",
+        pdf24: "Free",
+        category: "Pricing"
       },
       {
         feature: "Watermarks",
-        ourTool: false,
-        others: true
+        ourTool: "Never",
+        adobeAcrobat: "Never",
+        smallPDF: "Free version",
+        iLovePDF: "Free version",
+        pdf24: "Never",
+        category: "Pricing"
+      },
+      // Compression Features
+      {
+        feature: "Target Size Selection",
+        ourTool: "10KB to 5MB",
+        adobeAcrobat: "Quality levels only",
+        smallPDF: "Basic/Strong",
+        iLovePDF: "Low/Medium/High",
+        pdf24: "Quality slider",
+        category: "Compression Features",
+        highlight: true
       },
       {
-        feature: "Cost",
-        ourTool: "Free Forever",
-        others: "Freemium Models"
+        feature: "Exact Size Targeting",
+        ourTool: true,
+        adobeAcrobat: false,
+        smallPDF: false,
+        iLovePDF: false,
+        pdf24: false,
+        category: "Compression Features"
+      },
+      {
+        feature: "Quality Modes",
+        ourTool: "4 modes",
+        adobeAcrobat: "3 presets",
+        smallPDF: "2 modes",
+        iLovePDF: "3 levels",
+        pdf24: "Custom slider",
+        category: "Compression Features"
+      },
+      {
+        feature: "Text Preservation",
+        ourTool: "Smart AI",
+        adobeAcrobat: "Good",
+        smallPDF: "Basic",
+        iLovePDF: "Good",
+        pdf24: "Basic",
+        category: "Compression Features"
+      },
+      // Limitations
+      {
+        feature: "File Size Limit",
+        ourTool: "200MB",
+        adobeAcrobat: "100MB",
+        smallPDF: "5GB (Pro)",
+        iLovePDF: "200MB",
+        pdf24: "100MB",
+        category: "Limitations",
+        highlight: true
+      },
+      {
+        feature: "Daily Usage Limit",
+        ourTool: "Unlimited",
+        adobeAcrobat: "Unlimited",
+        smallPDF: "2 files (Free)",
+        iLovePDF: "1 per hour",
+        pdf24: "Unlimited",
+        category: "Limitations"
+      },
+      {
+        feature: "Batch Processing",
+        ourTool: "Sequential",
+        adobeAcrobat: true,
+        smallPDF: "Pro only",
+        iLovePDF: "Premium only",
+        pdf24: true,
+        category: "Limitations"
+      },
+      // Performance
+      {
+        feature: "Processing Speed",
+        ourTool: "5-30 seconds",
+        adobeAcrobat: "20-60 seconds",
+        smallPDF: "10-30 seconds",
+        iLovePDF: "10-40 seconds",
+        pdf24: "15-45 seconds",
+        category: "Performance",
+        highlight: true
+      },
+      {
+        feature: "Upload Required",
+        ourTool: false,
+        adobeAcrobat: true,
+        smallPDF: true,
+        iLovePDF: true,
+        pdf24: "Optional",
+        category: "Performance"
+      },
+      {
+        feature: "Offline Support",
+        ourTool: true,
+        adobeAcrobat: false,
+        smallPDF: false,
+        iLovePDF: false,
+        pdf24: "Desktop only",
+        category: "Performance"
+      },
+      // User Experience
+      {
+        feature: "Registration Required",
+        ourTool: false,
+        adobeAcrobat: true,
+        smallPDF: "For Pro",
+        iLovePDF: "For Premium",
+        pdf24: false,
+        category: "User Experience"
+      },
+      {
+        feature: "Email Required",
+        ourTool: false,
+        adobeAcrobat: true,
+        smallPDF: "Optional",
+        iLovePDF: "Optional",
+        pdf24: false,
+        category: "User Experience"
+      },
+      {
+        feature: "Ads Display",
+        ourTool: false,
+        adobeAcrobat: false,
+        smallPDF: "Free version",
+        iLovePDF: "Free version",
+        pdf24: "Minimal",
+        category: "User Experience"
       }
     ],
     faqs: generatePDFCompressFAQs(),
@@ -592,46 +865,187 @@ export const toolContentData: Record<string, ToolContentData> = {
       }
     ],
     comparisons: [
+      // Privacy & Security
       {
-        feature: "Ethical Approach",
-        ourTool: "Password Required",
-        others: "Often Password Cracking",
+        feature: "Password Processing",
+        ourTool: "Local only",
+        adobeAcrobat: "Server-side",
+        smallPDF: "Server-side",
+        iLovePDF: "Server-side",
+        pdf24: "Server-side",
+        category: "Privacy & Security",
         highlight: true
       },
       {
-        feature: "Security",
-        ourTool: "Local Processing Only",
-        others: "Server Upload Required"
+        feature: "Password Storage",
+        ourTool: "Never stored",
+        adobeAcrobat: "Encrypted temp",
+        smallPDF: "Session only",
+        iLovePDF: "Session only",
+        pdf24: "Not stored",
+        category: "Privacy & Security"
       },
       {
-        feature: "Speed",
-        ourTool: "2-5 Seconds",
-        others: "Minutes or Hours"
+        feature: "File Upload Required",
+        ourTool: false,
+        adobeAcrobat: true,
+        smallPDF: true,
+        iLovePDF: true,
+        pdf24: true,
+        category: "Privacy & Security"
       },
+      // Pricing
       {
-        feature: "Quality Preservation",
-        ourTool: "100% Original Quality",
-        others: "May Degrade Content"
-      },
-      {
-        feature: "Encryption Support",
-        ourTool: "All Standard Types",
-        others: "Limited Support"
-      },
-      {
-        feature: "Restrictions Removed",
-        ourTool: "All Restrictions",
-        others: "Partial Removal"
-      },
-      {
-        feature: "File Size Limits",
-        ourTool: "No Limits",
-        others: "Small File Limits"
-      },
-      {
-        feature: "Cost",
+        feature: "Basic Access",
         ourTool: "Free",
-        others: "Often Paid"
+        adobeAcrobat: "$19.99/month",
+        smallPDF: "Free (2/day)",
+        iLovePDF: "Free (limited)",
+        pdf24: "Free",
+        category: "Pricing",
+        highlight: true
+      },
+      {
+        feature: "Premium Features",
+        ourTool: "Free",
+        adobeAcrobat: "Included",
+        smallPDF: "$12/month",
+        iLovePDF: "$7/month",
+        pdf24: "Free",
+        category: "Pricing"
+      },
+      {
+        feature: "Watermarks",
+        ourTool: "Never",
+        adobeAcrobat: "Never",
+        smallPDF: "Free version",
+        iLovePDF: "Free version",
+        pdf24: "Never",
+        category: "Pricing"
+      },
+      // Unlock Features
+      {
+        feature: "Remove Open Password",
+        ourTool: true,
+        adobeAcrobat: true,
+        smallPDF: true,
+        iLovePDF: true,
+        pdf24: true,
+        category: "Unlock Features"
+      },
+      {
+        feature: "Remove Permissions",
+        ourTool: true,
+        adobeAcrobat: true,
+        smallPDF: "Pro only",
+        iLovePDF: true,
+        pdf24: true,
+        category: "Unlock Features"
+      },
+      {
+        feature: "128-bit Encryption",
+        ourTool: true,
+        adobeAcrobat: true,
+        smallPDF: true,
+        iLovePDF: true,
+        pdf24: true,
+        category: "Unlock Features"
+      },
+      {
+        feature: "256-bit Encryption",
+        ourTool: true,
+        adobeAcrobat: true,
+        smallPDF: "Pro only",
+        iLovePDF: true,
+        pdf24: "Limited",
+        category: "Unlock Features",
+        highlight: true
+      },
+      // Limitations
+      {
+        feature: "File Size Limit",
+        ourTool: "200MB",
+        adobeAcrobat: "100MB",
+        smallPDF: "5GB (Pro)",
+        iLovePDF: "200MB",
+        pdf24: "100MB",
+        category: "Limitations"
+      },
+      {
+        feature: "Daily Usage Limit",
+        ourTool: "Unlimited",
+        adobeAcrobat: "Unlimited",
+        smallPDF: "2 files (Free)",
+        iLovePDF: "1 per hour",
+        pdf24: "Unlimited",
+        category: "Limitations",
+        highlight: true
+      },
+      {
+        feature: "Batch Unlock",
+        ourTool: "Sequential",
+        adobeAcrobat: true,
+        smallPDF: "Pro only",
+        iLovePDF: "Premium only",
+        pdf24: false,
+        category: "Limitations"
+      },
+      // Performance
+      {
+        feature: "Processing Speed",
+        ourTool: "2-5 seconds",
+        adobeAcrobat: "10-30 seconds",
+        smallPDF: "5-20 seconds",
+        iLovePDF: "5-15 seconds",
+        pdf24: "10-25 seconds",
+        category: "Performance",
+        highlight: true
+      },
+      {
+        feature: "Quality Preserved",
+        ourTool: "100%",
+        adobeAcrobat: "100%",
+        smallPDF: "100%",
+        iLovePDF: "100%",
+        pdf24: "100%",
+        category: "Performance"
+      },
+      {
+        feature: "Offline Support",
+        ourTool: true,
+        adobeAcrobat: false,
+        smallPDF: false,
+        iLovePDF: false,
+        pdf24: false,
+        category: "Performance"
+      },
+      // User Experience
+      {
+        feature: "Registration Required",
+        ourTool: false,
+        adobeAcrobat: true,
+        smallPDF: "For Pro",
+        iLovePDF: "For Premium",
+        pdf24: false,
+        category: "User Experience"
+      },
+      {
+        feature: "Email Required",
+        ourTool: false,
+        adobeAcrobat: true,
+        smallPDF: "For download",
+        iLovePDF: "Optional",
+        pdf24: false,
+        category: "User Experience"
+      },
+      {
+        feature: "Ads Display",
+        ourTool: false,
+        adobeAcrobat: false,
+        smallPDF: "Free version",
+        iLovePDF: "Free version",
+        pdf24: "Minimal",
+        category: "User Experience"
       }
     ],
     faqs: generatePDFUnlockFAQs(),

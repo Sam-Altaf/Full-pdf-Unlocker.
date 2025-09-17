@@ -1,3 +1,4 @@
+import React from "react";
 import { Card } from "@/components/ui/card";
 import { Check, Zap, Shield, Globe, RefreshCw, Clock, Sparkles, Server } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -124,8 +125,13 @@ export function UseCasesSection({ useCases }: UseCasesSectionProps) {
 interface ComparisonItem {
   feature: string;
   ourTool: boolean | string;
-  others: boolean | string;
+  adobeAcrobat?: boolean | string;
+  smallPDF?: boolean | string;
+  iLovePDF?: boolean | string;
+  pdf24?: boolean | string;
+  others?: boolean | string; // Legacy support
   highlight?: boolean;
+  category?: string;
 }
 
 interface ComparisonSectionProps {
@@ -134,6 +140,184 @@ interface ComparisonSectionProps {
 }
 
 export function ComparisonSection({ toolName, comparisons }: ComparisonSectionProps) {
+  // Group comparisons by category if categories exist
+  const hasCategories = comparisons.some(item => item.category);
+  const groupedComparisons = hasCategories ? comparisons.reduce((acc, item) => {
+    const category = item.category || "General";
+    if (!acc[category]) acc[category] = [];
+    acc[category].push(item);
+    return acc;
+  }, {} as Record<string, ComparisonItem[]>) : { "All Features": comparisons };
+
+  // Check if we have new format data (with specific competitor columns)
+  const hasCompetitorData = comparisons.some(item => 
+    item.adobeAcrobat !== undefined || 
+    item.smallPDF !== undefined || 
+    item.iLovePDF !== undefined || 
+    item.pdf24 !== undefined
+  );
+
+  const renderCellValue = (value: boolean | string | undefined) => {
+    if (value === undefined) return <span className="text-muted-foreground">—</span>;
+    if (typeof value === 'boolean') {
+      return value ? (
+        <Check className="w-5 h-5 text-green-500 mx-auto" />
+      ) : (
+        <span className="text-red-500 font-semibold">✕</span>
+      );
+    }
+    // Check if it's a special value that should be highlighted
+    if (value === "Free" || value === "Unlimited" || value === "No limit") {
+      return <span className="text-green-600 dark:text-green-400 font-semibold">{value}</span>;
+    }
+    if (value.includes("$") || value.includes("/month") || value === "Paid") {
+      return <span className="text-orange-600 dark:text-orange-400 font-medium">{value}</span>;
+    }
+    if (value === "Limited" || value.includes("limit") || value.includes("watermark")) {
+      return <span className="text-red-600 dark:text-red-400">{value}</span>;
+    }
+    return <span className="text-foreground">{value}</span>;
+  };
+
+  if (hasCompetitorData) {
+    // New detailed competitor comparison table
+    return (
+      <section className="py-12" data-testid="section-comparison">
+        <article className="container mx-auto px-4 max-w-7xl">
+          <header>
+            <h2 className="text-3xl font-bold mb-4" data-testid="heading-comparison">
+              {toolName} vs. Popular Competitors
+            </h2>
+            <p className="text-lg text-muted-foreground mb-8">
+              Comprehensive comparison with industry-leading PDF tools - See why AltafToolsHub stands out
+            </p>
+          </header>
+          
+          <div className="overflow-x-auto rounded-lg border">
+            <table className="w-full border-collapse bg-card">
+              <thead>
+                <tr className="bg-muted/50">
+                  <th className="text-left p-4 font-semibold border-b border-r sticky left-0 bg-muted/50 z-10 min-w-[200px]">Feature</th>
+                  <th className="text-center p-4 font-bold border-b bg-primary/10 min-w-[140px]">
+                    <div className="flex flex-col items-center gap-1">
+                      <span className="text-primary">AltafToolsHub</span>
+                      <span className="text-xs text-green-600 dark:text-green-400">✨ Our Solution</span>
+                    </div>
+                  </th>
+                  <th className="text-center p-4 font-semibold text-muted-foreground border-b border-l min-w-[140px]">
+                    <div className="flex flex-col items-center gap-1">
+                      <span>Adobe Acrobat</span>
+                      <span className="text-xs text-orange-600 dark:text-orange-400">Premium</span>
+                    </div>
+                  </th>
+                  <th className="text-center p-4 font-semibold text-muted-foreground border-b border-l min-w-[140px]">
+                    <div className="flex flex-col items-center gap-1">
+                      <span>SmallPDF</span>
+                      <span className="text-xs text-muted-foreground">Popular</span>
+                    </div>
+                  </th>
+                  <th className="text-center p-4 font-semibold text-muted-foreground border-b border-l min-w-[140px]">
+                    <div className="flex flex-col items-center gap-1">
+                      <span>iLovePDF</span>
+                      <span className="text-xs text-muted-foreground">Free/Paid</span>
+                    </div>
+                  </th>
+                  <th className="text-center p-4 font-semibold text-muted-foreground border-b border-l min-w-[140px]">
+                    <div className="flex flex-col items-center gap-1">
+                      <span>PDF24</span>
+                      <span className="text-xs text-muted-foreground">Free</span>
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {Object.entries(groupedComparisons).map(([category, items], catIndex) => (
+                  <React.Fragment key={`category-${catIndex}`}>
+                    {hasCategories && (
+                      <tr className="bg-muted/30">
+                        <td colSpan={6} className="p-3 font-semibold text-sm uppercase tracking-wider text-muted-foreground">
+                          {category}
+                        </td>
+                      </tr>
+                    )}
+                    {items.map((item, index) => (
+                      <tr 
+                        key={`row-${catIndex}-${index}`} 
+                        className={cn(
+                          "hover:bg-muted/20 transition-colors",
+                          item.highlight && "bg-primary/5"
+                        )}
+                        data-testid={`comparison-row-${catIndex}-${index}`}
+                      >
+                        <td className="p-4 border-b border-r font-medium sticky left-0 bg-card">
+                          {item.feature}
+                        </td>
+                        <td className="text-center p-4 border-b bg-primary/5">
+                          {renderCellValue(item.ourTool)}
+                        </td>
+                        <td className="text-center p-4 border-b border-l">
+                          {renderCellValue(item.adobeAcrobat)}
+                        </td>
+                        <td className="text-center p-4 border-b border-l">
+                          {renderCellValue(item.smallPDF)}
+                        </td>
+                        <td className="text-center p-4 border-b border-l">
+                          {renderCellValue(item.iLovePDF)}
+                        </td>
+                        <td className="text-center p-4 border-b border-l">
+                          {renderCellValue(item.pdf24)}
+                        </td>
+                      </tr>
+                    ))}
+                  </React.Fragment>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Key Advantages Summary */}
+          <div className="grid md:grid-cols-2 gap-6 mt-8">
+            <div className="p-6 bg-green-50 dark:bg-green-950/30 rounded-lg border border-green-200 dark:border-green-800">
+              <div className="flex items-start gap-3">
+                <Shield className="w-6 h-6 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
+                <div>
+                  <h3 className="font-semibold mb-2 text-green-900 dark:text-green-100">100% Privacy Guaranteed</h3>
+                  <p className="text-sm text-green-700 dark:text-green-300">
+                    Unlike all competitors listed above, AltafToolsHub never uploads your files to any server. 
+                    All processing happens locally in your browser, ensuring complete data privacy and security.
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="p-6 bg-blue-50 dark:bg-blue-950/30 rounded-lg border border-blue-200 dark:border-blue-800">
+              <div className="flex items-start gap-3">
+                <Zap className="w-6 h-6 text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0" />
+                <div>
+                  <h3 className="font-semibold mb-2 text-blue-900 dark:text-blue-100">No Hidden Costs</h3>
+                  <p className="text-sm text-blue-700 dark:text-blue-300">
+                    While competitors charge $10-20/month or add watermarks to free versions, 
+                    AltafToolsHub provides all features completely free, forever, with no watermarks or limitations.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Competitor Limitations Notice */}
+          <div className="mt-6 p-4 bg-amber-50 dark:bg-amber-950/30 rounded-lg border border-amber-200 dark:border-amber-800">
+            <p className="text-sm text-amber-800 dark:text-amber-200">
+              <strong>Note:</strong> Competitor features and pricing are based on publicly available information as of 2025. 
+              Adobe Acrobat Pro costs $19.99/month, SmallPDF Pro costs $12/month, iLovePDF Premium costs $7/month. 
+              Free versions of these tools often have significant limitations.
+            </p>
+          </div>
+        </article>
+      </section>
+    );
+  }
+
+  // Fallback to old simple comparison for backward compatibility
   return (
     <section className="py-12" data-testid="section-comparison">
       <article className="container mx-auto px-4 max-w-6xl">
