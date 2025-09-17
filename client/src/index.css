@@ -101,7 +101,11 @@
     -moz-osx-font-smoothing: grayscale;
   }
   
-  /* Typography hierarchy */
+  /* Typography hierarchy with scroll margins to prevent sticky header overlap */
+  h1, h2, h3, h4, h5, h6 {
+    scroll-margin-top: 6rem; /* Space for sticky header + extra padding */
+  }
+  
   h1 {
     @apply text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight;
   }
@@ -116,6 +120,11 @@
   
   h4 {
     @apply text-lg sm:text-xl lg:text-2xl font-medium;
+  }
+  
+  /* Also fix sticky sections to prevent overlap */
+  section[id] {
+    scroll-margin-top: 6rem;
   }
   
   p {
